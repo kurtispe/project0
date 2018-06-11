@@ -3,6 +3,8 @@
 h1,label{
     color: white;
 }
+h1{ font-size: 7ex;
+}
 body {
     
     background-image: url("image/flashy.jpg");
