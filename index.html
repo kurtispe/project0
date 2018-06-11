@@ -1,4 +1,61 @@
-<html>
-    hello world
-    helo world
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>FlashCard</title>
+</head>
+
+<header>
+    <h1> Flash Card </h1>
+    <section>
+        <edit>
+            <ul>
+                <li>
+                    <button type="new" class="btn btn-success"> New Topic </button>
+                </li>
+                <li>
+                    <button type="select" class="btn btn-info"> Select Topic </button>
+                </li>
+                <li>
+                    <button type="delete" class="btn btn-danger"> Remove Topic </button>
+                </li>
+
+            </ul>
+        </edit>
+    </section>
+</header>
+
+<body>
+    <main>
+        <label for="">Card</label>
+        <textarea name="card box" id="card box" cols="30" rows="10" class="form-control"></textarea>
+
+        <section>
+            <edit>
+                <ul>
+                    <li>
+                        <button type="new" class="btn btn-success"> New </button>
+                    </li>
+                    <li>
+                        <button type="edit" class="btn btn-info"> Edit </button>
+                    </li>
+                    <li>
+                        <button type="flip" class="btn btn-info"> Flip </button>
+                    </li>
+                    <li>
+                        <button type="select" class="btn btn-info"> Next</button>
+                    </li>
+                    <li>
+                        <button type="delete" class="btn btn-danger"> Delete </button>
+                    </li>
+                </ul>
+            </edit>
+        </section>
+    </main>
+</body>
+
 </html>

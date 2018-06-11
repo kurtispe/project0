@@ -1,7 +1,7 @@
-# Ice Cream shop - readme
+# FlashCards - readme
 
 ## about us
-we are an ice cream shop serving gelatos, sorbet and frozen yogurtz.
+Flash card website, we're here to help you learn.
 
 ## core team
 + kurtis pedersen
@@ -10,4 +10,4 @@ we are an ice cream shop serving gelatos, sorbet and frozen yogurtz.
 if you want to know more, [read our docs](https://bing.com)
 
 ## license
-licensed under the [MIT license](https://github.com/1806-jun04-net-/kurtis-code/blob/master/LICENSE)
+licensed under the [MIT license](https://choosealicense.com/licenses/mit/)
