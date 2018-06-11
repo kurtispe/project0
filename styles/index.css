@@ -1,8 +1,12 @@
 
 
-
-body{
-    background-image: url("image/flashy.jpg");
-    background-repeat: no-repeat;
-/*background-color: aquamarine;*/
+h1,label{
+    color: white;
 }
+body {
+    
+    background-image: url("image/flashy.jpg");
+    background-size: cover;
+    
+}
+
