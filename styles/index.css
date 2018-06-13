@@ -11,4 +11,27 @@ body {
     background-size: cover;
     
 }
+.btn_t {
+    background-color: mediumpurple;
+    color: white;
+    border-color: lightskyblue;
+    padding: 8px 20px;
+    
+}
+
+.btn_m {   
+    background-color: rgb(130, 80, 180);
+    color: white;
+    border-color: lightskyblue;
+    padding: 8px 20px;
+    
+}
+
+.btn_b {
+    background-color: darkslateblue;
+    color: white;
+    border-color:  lightskyblue;
+    padding: 8px 20px;
+    
+}
 
