@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="icon" type="image" href="styles/image/bulb.png" alt="Flash Card">
-    <title>Flash Card</title>
+    <title>Flash Cards</title>
 </head>
 
 <header class="row">
 
-    <h1 class="col-sm-4 col-sm-offset-8"> Flash Card </h1>
+    <h1 class="col-sm-4 col-sm-offset-8"> Flash Cards </h1>
 
-    <section>
-        <edit>
+    <section id="action">
+        
             <ul class="nav">
                 <li class="col-sm-3"></li>
                 <li class=" col-sm-2">
@@ -30,7 +30,7 @@
                 </li>
                 <li class="col-sm-3"></li>
             </ul>
-        </edit>
+        
     </section>
 
 </header>
@@ -40,28 +40,29 @@
     <main>
 
         <section class="row">
-            
+
             <card>
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
-                    <textarea name="card box" id="card_box" cols="80" rows="10"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa autem, deserunt id sunt unde provident voluptatibus repudiandae nihil recusandae doloribus magni earum soluta numquam? Minima libero sit rerum ex doloribus? </textarea>
+                    <textarea name="card box" id="card_box" cols="60" rows="10"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum deleniti sequi voluptate atque Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque animi veniam totam, eligendi voluptatibus nisi doloribus, ducimus praesentium consequatur, cum quam mollitia. Nostrum corporis rerum, corrupti hic dignissimos temporibus. Dolores. repellendus rerum nihil itaque adipisci eligendi perferendis quos fugiat, ipsam deserunt quia iure ab qui doloribus! Id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque magni ratione quaerat illum tenetur officiis aliquid eius optio? Sunt ratione eveniet corrupti accusamus. Doloribus accusantium soluta ut quisquam sint temporibus.  </textarea>
                 </div>
-                <!--<div class="col-sm-3"></div>-->
             </card>
-            
+
             <info>
-                <ul class="col-sm-3">
-                   <!-- <div class="col-sm-4"></div> -->
-                    <li > Display Topic </li>
-                    <li > Display Card ID </li>
-                    <!--<div class="col-sm-4"></div>-->
+                <ul>
+                    <li> Topic:
+                        <scripty> "topic" </scripty>
+                    </li>
+                    <li> ID
+                        <scripty> "number" </scripty>
+                    </li>
                 </ul>
             </info>
         </section>
 
-        <section>
-            <edit>
-                <ul class="nav">
+        <section id="action">
+            
+                <ul>
                     <div class="col-sm-3"></div>
                     <li class="col-sm-1">
                         <button type="new" class="btn_t"> New </button>
@@ -80,7 +81,7 @@
                     </li>
                     <div class="col-sm-3"></div>
                 </ul>
-            </edit>
+        
         </section>
     </main>
 </body>
@@ -88,9 +89,9 @@
 <footer>
     <p> Special Thanks</p>
     <img src="styles/image/bulb.png" alt="icon">
-    <thanks>Icons made by
+    <thanks>Icon made by
         <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
-        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> and licensed by
         <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" style:color="white">CC 3.0 BY</a>
     </thanks>
 </footer>
