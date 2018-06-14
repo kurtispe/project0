@@ -9,6 +9,16 @@ body {
     background-image: url("image/flashy.jpg");
     background-size: cover;
 }
+h1{
+    margin-bottom: 75px;
+}
+header>section{
+    margin-bottom: 10px;
+}
+
+body section+section{
+margin-bottom: 100px;
+}
 .btn_t {
     background-color: mediumpurple; 
     border-color: lightskyblue;
@@ -26,4 +36,8 @@ body {
     padding: 8px 20px;
     
 }
-
+#card_box{
+color: purple;
+border: 2px outset lightskyblue;
+margin-bottom: 20px;
+}
