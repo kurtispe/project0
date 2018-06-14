@@ -7,57 +7,71 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/index.css">
-    <title>FlashCard</title>
+    <title>Flash Card</title>
+    <link rel="icon" type="image" href="styles/image/bulb.png" alt="Flash Card">
 </head>
 
 <header class="row">
     <h1 class="col-sm-4 col-sm-offset-8"> Flash Card </h1>
     <section>
         <edit>
-            <ul>
-                <li>
+            <ul class="nav">
+                <li class="col-sm-3"></li>
+                <li class=" col-sm-2">
                     <button type="new" class="btn_t"> New Topic </button>
                 </li>
-                <li>
+                <li class="col-sm-2">
                     <button type="select" class="btn_m"> Select Topic </button>
                 </li>
-                <li>
+                <li class="col-sm-2">
                     <button type="delete" class="btn_b"> Remove Topic </button>
                 </li>
-
+                <li class="col-sm-3"></li>
             </ul>
         </edit>
     </section>
 </header>
 
 <body class="container-fluid">
-  
+
     <main>
         <label for="">Card</label>
         <textarea name="card box" id="card box" cols="10" rows="10" class="form-control"></textarea>
 
         <section>
             <edit>
-                <ul>
-                    <li>
+                <ul class="nav">
+                    <li class="col-sm-1"></li>
+                    <li class="col-sm-2">
                         <button type="new" class="btn_t"> New </button>
                     </li>
-                    <li>
+                    <li class="col-sm-2">
                         <button type="edit" class="btn_m"> Edit </button>
                     </li>
-                    <li>
+                    <li class="col-sm-2">
                         <button type="flip" class="btn_m"> Flip </button>
                     </li>
-                    <li>
+                    <li class="col-sm-2">
                         <button type="select" class="btn_m"> Next</button>
                     </li>
-                    <li>
+                    <li class="col-sm-2">
                         <button type="delete" class="btn_b"> Delete </button>
                     </li>
+                    <li class="col-sm-1"></li>
                 </ul>
             </edit>
         </section>
     </main>
 </body>
+
+<footer>
+    <p> Special Thanks</p>
+    <img src="styles/image/bulb.png" alt="icon">
+    <thanks>Icons made by
+        <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
+        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+        <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+    </thanks>
+</footer>
 
 </html>

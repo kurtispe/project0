@@ -1,35 +1,27 @@
 
-
-h1,label{
+ header,body,footer,a{
     color: white;
 }
-h1{ font-size: 7ex;
+h1{
+    font-size: 7ex;    
 }
 body {
-    
     background-image: url("image/flashy.jpg");
     background-size: cover;
-    
 }
 .btn_t {
-    background-color: mediumpurple;
-    color: white;
+    background-color: mediumpurple; 
     border-color: lightskyblue;
     padding: 8px 20px;
-    
+   
 }
-
 .btn_m {   
     background-color: rgb(130, 80, 180);
-    color: white;
     border-color: lightskyblue;
-    padding: 8px 20px;
-    
+    padding: 8px 20px;   
 }
-
 .btn_b {
     background-color: darkslateblue;
-    color: white;
     border-color:  lightskyblue;
     padding: 8px 20px;
     
