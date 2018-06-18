@@ -9,8 +9,63 @@ var card = {
     front: 'question',
     back: 'answer',
 }
+var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
+
+    document.querySelector('textarea').value = 'Enter Question?';
+    var saveButton = document.querySelector('button.save');
+    var cancelButton = document.querySelector('button.cancel');
+    toggleVisibility();
+    var question = '';
+
+    saveButton.addEventListener('click', (e1) => {                      //1st degree save
+
+        question = document.querySelector('textarea').value;
+        console.log(question);
+        document.querySelector('textarea').value = 'Enter Answer?';
+        var answer = '';
+        var answerSave = document.querySelector('button.save');
+        var answerCancel = document.querySelector('button.cancel');
+
+        answerSave.addEventListener('click', (e1) => {                  //2nd degree save
+            answer = document.querySelector('textarea').value;
+            console.log(answer);
+            toggleVisibility();
+            document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
+            e1.stopImmediatePropagation();
+        });
+
+        answerCancel.addEventListener('click', (e1) => {                        //2nd degree cancel
+            document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID'; 
+            toggleVisibility();
+            e1.stopImmediatePropagation();
+        });
+
+    });
+
+    cancelButton.addEventListener('click', (e1) => {                        //1st degree ancel
+        toggleVisibility();
+        document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
+        document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID'; //write code to old topic here
+        e1.stopImmediatePropagation();
+    });
+
+    /*var superiorQ = numberQ + 1;      handle array stuff
+
+    for (n = 0; n <= superiorQ; n += 1) {
+        if (questionArray[n] == true) {
+        } else {
+            questionArray[n] = question;
+        }
+    } */
+
+    e.preventDefault;
+};
 
 var newTopicButton = document.querySelector('button[type=newTopic]');
+var newCardButton = document.querySelector('button[type=newCard]');
+//newCardButton.addEventListener('click', () => {
+//   addQuestion();
+//});
 
 newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
     document.querySelector('textarea').value = 'Define Topic?';         //everything good
@@ -78,55 +133,6 @@ submitButton.addEventListener('click', (e)=> {
 })
 */
 
-var addQuestion = (topic) => {                            //adding a question, must update question and answer array
-
-    document.querySelector('textarea').value = 'Enter Question?';
-    var saveButton = document.querySelector('button.save'); 
-    var cancelButton = document.querySelector('button.cancel');
-    toggleVisibility();
-    var question = '';
-
-    saveButton.addEventListener('click', (e1) => {
-
-        question = document.querySelector('textarea').value;
-        console.log(question);
-        document.querySelector('textarea').value = 'Enter Answer?';
-        var answer = '';
-        var answerSave = document.querySelector('button.save');
-        var answerCancel= document.querySelector('button.cancel');
-
-        answerSave.addEventListener('click', (e1) => {
-            answer = document.querySelector('textarea').value;
-            console.log(answer);
-            toggleVisibility();
-            document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
-            e1.stopImmediatePropagation();
-
-        });
-
-        answerCancel.addEventListener('click', (e1) => {
-         toggleVisibility();
-         e1.stopImmediatePropagation();
-        });
-
-    });
-
-    cancelButton.addEventListener('click', (e1) => {
-        toggleVisibility();
-        document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
-        document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
-        e1.stopImmediatePropagation();
-    });
-    
-    var superiorQ = numberQ + 1;
-
-    for (n = 0; n <= superiorQ; n += 1) {
-        if (questionArray[n] == true) {
-        } else {
-            questionArray[n] = question;
-        }
-    }
-};
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
     var superiorQ = numberQ - 1;
