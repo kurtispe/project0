@@ -39,6 +39,20 @@ ul{
     border-color:  lightskyblue;
     padding: 8px 20px;    
 }
+.save{
+    background-color: mediumpurple; 
+    border-color: lightskyblue;
+    padding: 8px 20px;
+    visibility: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.cancel{
+    background-color: darkslateblue;
+    border-color:  lightskyblue;
+    padding: 8px 20px; 
+    visibility: hidden;
+}
 #card_box{
 color: purple;
 border: 3px outset lightskyblue;

@@ -8,28 +8,35 @@ var topic = {
 
 
 var newTopicButton = document.querySelector('button[type=newTopic]');
-newTopicButton.addEventListener('click', (e) => {
-    document.querySelector('textarea').innerHTML = 'Define Topic?';         //everything good
 
 
+newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
+    document.querySelector('textarea').value = 'Define Topic?';         //everything good
+    toggleVisibility();                                                     //show save/cancel buttons
 
+    var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+    var cancelButton = document.querySelector('button.cancel');
 
+    saveButton.addEventListener('click', (e1) => {
 
+        var contentHolder = document.querySelector('textarea');       //get the value inside the text area
 
+        document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
 
-    var contentHolder = document.querySelector('textarea');
-    contentHolder.addEventListener('keyup', (e1) => {
-
-        if (characterCode == 13 && e1.shiftkey == false) {
-            e1.preventDefault();
-            document.querySelector('#topic').innerHTML = contentHolder.value;
-            //where we also need to add object constructor
-            console.log(contentHolder).value;
-            return null;
-        }
-
+        //where we also need to add object
+        
+        console.log(contentHolder.value);
+        toggleVisibility();
+        e1.stopImmediatePropagation();
     });
 
+    cancelButton.addEventListener('click', (e1) => {
+        toggleVisibility();
+        document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
+        document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
+        e1.stopImmediatePropagation();
+    });
+    e.preventDefault;
 });
 
 //e.stopPropagation();
@@ -82,6 +89,16 @@ var addQuestion = () => {                            //adding a question, must u
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
     var superiorQ = numberQ - 1;
+};
+
+var toggleVisibility = () => {
+    if (document.querySelector('.save').style.visibility === 'visible') {
+        document.querySelector('.save').style.visibility = 'hidden';
+        document.querySelector('.cancel').style.visibility = 'hidden';
+    } else {
+        document.querySelector('.save').style.visibility = 'visible';
+        document.querySelector('.cancel').style.visibility = 'visible';
+    }
 };
 
 
