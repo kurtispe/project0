@@ -10,64 +10,61 @@ var card = {
     back: 'answer',
 }
 
+var keyChain = [newTopicKey,selectTopicKey,deleteTopicKey,newCardcKey,newCardcKeySecondDegree,editCardcKey,flipCardcKey,nextCardcKey,deleteCardcKey]
+toggleKey(keyChain, true);
+
 var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
+    'usestrict';
 
     document.querySelector('textarea').value = 'Enter Question?';
     var saveButton = document.querySelector('button.save');
     var cancelButton = document.querySelector('button.cancel');
     toggleVisibility();
-    
 
     saveButton.addEventListener('click', (e1) => {                      //1st degree save
-        var question = '';
-        question = document.querySelector('textarea').value;
-        console.log(question);
-        document.querySelector('textarea').value = 'Enter Answer?';
-        var answerSave = document.querySelector('button.save');
-        var answerCancel = document.querySelector('button.cancel');
-        e1.stopImmediatePropagation();
-
+            var question = '';
+            question = document.querySelector('textarea').value;
+            console.log(question);
+            document.querySelector('textarea').value = 'Enter Answer?';     //needs to be cut off as it's selected a second time on the second save
+            var answerSave = document.querySelector('button.save');
+            var answerCancel = document.querySelector('button.cancel');
+            e1.stopImmediatePropagation();
         answerSave.addEventListener('click', (e2) => {                  //2nd degree save
-            var answer = '';
-            answer = document.querySelector('textarea').value;
-            console.log(answer);
-            toggleVisibility();
-            document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
-            document.querySelector('textarea').value = 'Current Card Question';
-            e2.stopImmediatePropagation();
+                var answer = '';
+                answer = document.querySelector('textarea').value;
+                console.log(answer);
+                document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
+                document.querySelector('textarea').value = 'Current Card Question'; 
+                toggleVisibility();
+                e2.stopImmediatePropagation();
         });
-
         answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
-            document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID'; 
-            toggleVisibility();
-            e2.stopImmediatePropagation();
+                document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID';
+                document.querySelector('textarea').value = 'Previous Card';
+                toggleVisibility();
+                e2.stopImmediatePropagation();
         });
-
-    }); 
-
-    cancelButton.addEventListener('click', (e1) => {                        //1st degree ancel
-        toggleVisibility();
-        document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
-        document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID'; //write code to old topic here
-        e1.stopImmediatePropagation();
-    });  
-    
-
+    });
+    cancelButton.addEventListener('click', (e1) => {                        //1st degree cancel
+            toggleVisibility();
+            //write code to return to old card here
+            document.querySelector('.ID').innerHTML = 'ID: ' + 'Current ID'; //write code to old topic here
+            e1.stopImmediatePropagation();
+    });
 };
 
 var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
 
 newCardButton.addEventListener('click', (e) => {
-
-   addQuestion();
-   e.preventDefault();
+    addQuestion();
+    e.preventDefault();
 });
 
 newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
+    'use strict';
     document.querySelector('textarea').value = 'Define Topic?';         //everything good
     toggleVisibility();                                                     //show save/cancel buttons
-
     var saveButton = document.querySelector('button.save');                 //create the buttons themselves
     var cancelButton = document.querySelector('button.cancel');
 
@@ -144,6 +141,17 @@ var toggleVisibility = () => {
         document.querySelector('.cancel').style.visibility = 'visible';
     }
 };
+
+
+var toggleKey = (array, key) => {
+    array.forEach(element => {
+        if(elemet === key) {
+            key = true;
+        } else {
+            element = false;
+        }
+    });
+}
 
 /*var superiorQ = numberQ + 1;      handle array stuff
 
