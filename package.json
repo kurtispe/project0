@@ -1,0 +1,24 @@
+{
+  "name": "project0",
+  "version": "1.0.0",
+  "description": "Flash card website, we're here to help you learn.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurtispe/project0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kurtispe/project0/issues"
+  },
+  "homepage": "https://github.com/kurtispe/project0#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

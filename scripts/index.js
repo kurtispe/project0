@@ -1,14 +1,37 @@
+var theMachine = [0];
+
 var topic = {
-    topicName: 'error, need name',
+    topicName: '',
     numberQ: 0,
-    questionArray: [0],    //numberQ
-    questionAnswer: [0],   //numberQ
+    questionArray:[],
+    answerArray:[]   
 }
 
 var card = {
     front: 'question',
-    back: 'answer',
+    back: 'answer'
 }
+
+function Topic(name) {                 //topic constructor
+    this.topicName = name;
+    this.numberQ = 0;
+    this.questionArray = new Array(0);
+    this.answerArray = new Array(0);
+}
+
+function Card(question, answer) {       //card constructor 
+    this.front = question;
+    this.back = answer;
+}
+
+var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end
+    var copyMachine = new Array(array.length);
+    for (n = 0; n <= array.length; n++) {  
+        copyMachine[n] = array[n];
+    }
+    theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to svae theMachine's value outside the function with calling array the parameter  
+}
+
 
 var newTopicKey = false;                                //I hate having to make this a lock game but js is dumb and won't let you cancel event listeners unless they are predefined functions
 var selectTopicKey = false;
@@ -30,43 +53,45 @@ var addQuestion = () => {                            //adding a question, must u
         document.querySelector('textarea').value = 'Enter Question?';
         var saveButton = document.querySelector('button.save');
         var cancelButton = document.querySelector('button.cancel');
-        toggleVisibility();
+        toggleOn();
 
         saveButton.addEventListener('click', (e1) => {                      //1st degree save
-            if (newCardKey===true) {
-            var question = '';
-            question = document.querySelector('textarea').value;
-            console.log(question);
-            document.querySelector('textarea').value = 'Enter Answer?';     //needs to be cut off as it's selected a second time on the second save
-            var answerSave = document.querySelector('button.save');
-            var answerCancel = document.querySelector('button.cancel');
-            newCardKey = false;
-            newCardKeySecondDegree = true;
-            toggleKey(keyChain, newCardKeySecondDegree);
-            e1.stopImmediatePropagation();
-            
-            answerSave.addEventListener('click', (e2) => {                  //2nd degree save
-                if (newCardKeySecondDegree === true) {
-                    var answer = '';
-                    answer = document.querySelector('textarea').value;
-                    console.log(answer);
-                    document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
-                    document.querySelector('textarea').value = 'Current Card Question';
-                    toggleVisibility();
-                    newCardKeySecondDegree = false;
-                    e2.stopImmediatePropagation();
-                }
-            });
-            answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
-                if (newCardKeySecondDegree === true) {
-                    document.querySelector('.ID').innerHTML = 'ID: ' + 'previoust ID';
-                    document.querySelector('textarea').value = 'Previous Card';
-                    toggleVisibility();
-                    newCardKeySecondDegree = false;
-                    e2.stopImmediatePropagation();
-                }
-            });
-        }
+            if (newCardKey === true) {
+                var question = '';
+                question = document.querySelector('textarea').value;
+                console.log('Im the 1st save button from new card: ' + question);
+                document.querySelector('textarea').value = 'Enter Answer?';     //needs to be cut off as it's selected a second time on the second save
+                var answerSave = document.querySelector('button.save');
+                var answerCancel = document.querySelector('button.cancel');
+                newCardKey = false;
+                
+                toggleKey(keyChain, newCardKeySecondDegree);
+                newCardKeySecondDegree = true;
+
+                e1.stopImmediatePropagation();
+
+                answerSave.addEventListener('click', (e2) => {                  //2nd degree save
+                    if (newCardKeySecondDegree === true) {
+                        var answer = '';
+                        answer = document.querySelector('textarea').value;
+                        console.log('Im the 2nd save button from new card: ' + answer);
+                        document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
+                        document.querySelector('textarea').value = 'Current Card Question';
+                        toggleVisibility();
+                        newCardKeySecondDegree = false;
+                        e2.stopImmediatePropagation();
+                    }
+                });
+                answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
+                    if (newCardKeySecondDegree === true) {
+                        document.querySelector('.ID').innerHTML = 'ID: ' + 'previoust ID';
+                        document.querySelector('textarea').value = 'Previous Card';
+                        toggleVisibility();
+                        newCardKeySecondDegree = false;
+                        e2.stopImmediatePropagation();
+                    }
+                });
+            }
         });
         cancelButton.addEventListener('click', (e1) => {                        //1st degree cancel
             if (newCardKey === true) {
@@ -82,33 +107,33 @@ var addQuestion = () => {                            //adding a question, must u
 };
 
 newCardButton.addEventListener('click', (e) => {           //impliments addQuestion()
-    newCardKey = true;
-    toggleKey(keyChain, newCardKey);
+    
+    toggleKey(keyChain, newCardKey);  
+    newCardKey = true;         
+
     addQuestion();
     e.preventDefault();
 });
 
 newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
-    'use strict';
     document.querySelector('textarea').value = 'Define Topic?';         //everything good
-    toggleVisibility();                                                     //show save/cancel buttons
-    var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+    toggleOn();                                                     //show save/cancel buttons
+    var saveButton = document.querySelector('button.save');                 
     var cancelButton = document.querySelector('button.cancel');
-    newTopicKey = true;
+    
     toggleKey(keyChain, newTopicKey);
+    newTopicKey = true;
 
     saveButton.addEventListener('click', (e1) => {
         if (newTopicKey === true) {
-
             var contentHolder = document.querySelector('textarea');       //get the value inside the text area
-
             document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
 
             //where we also need to add object constructor 
-
-            console.log(contentHolder.value);
+            console.log('Im the save button from new topic: ' + contentHolder.value);
             toggleVisibility();
             newTopicKey = false;
+            document.querySelector('textarea').value = 'Please Create a Card';
             e1.stopImmediatePropagation();
         }
     });
@@ -125,9 +150,52 @@ newTopicButton.addEventListener('click', (e) => {                       //creats
     e.preventDefault();
 });
 
+var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
+    var superiorQ = numberQ - 1;
+};
+
+var toggleVisibility = () => {
+    if (document.querySelector('.save').style.visibility === 'visible') {
+        document.querySelector('.save').style.visibility = 'hidden';
+        document.querySelector('.cancel').style.visibility = 'hidden';
+    } else {
+        document.querySelector('.save').style.visibility = 'visible';
+        document.querySelector('.cancel').style.visibility = 'visible';
+    }
+};
+
+var toggleOn = () => {
+        document.querySelector('.save').style.visibility = 'visible';
+        document.querySelector('.cancel').style.visibility = 'visible';
+};
+
+var toggleKey = (array, key) => {                   //function to cause eventListeners to be deaf
+
+    /*array.forEach(value => {
+        if (value === key) {
+            key = true;    
+        } else {
+            value = false;    //value to element
+        }
+    });*/
+
+    array.forEach(value => {
+            value = false;    //value to element   
+    });
+
+    console.log('locks have changed');
+}
+
+/*var superiorQ = numberQ + 1;      handle array stuff
+    for (n = 0; n <= superiorQ; n += 1) {
+        if (questionArray[n] == true) {
+        } else {
+            questionArray[n] = question;
+        }
+    } */
 
 
-//e.stopPropagation();
+    //e.stopPropagation();
 //add another event llistener for 'enter'
 //  this.topicName = document.querySelector('textarea').value;     //this.topicName = document.querySelector('#textarea').value;
 //return null; 
@@ -144,15 +212,12 @@ newTopicButton.addEventListener('click', (e) => {                       //creats
 //}
 
 /* in class stuff, look at me later:
-
 var formElement = document.querySelector('textarea'[]);
 var formElement1 = document.forms[0];  --can select stuff off of expected elements, allready in the code
-
 formElemt.addEventListener('submit', () => {
     var p = new Constructor();
     alert('thank you, ' + p.name);
 })
-
 var submitButtin = document.querySelector('button[type=submit]');
 submitButton.addEventListener('click', (e)=> {
     var topic = new Constructor();      ^ <-can be called whatever
@@ -161,41 +226,6 @@ submitButton.addEventListener('click', (e)=> {
     e.preventDefault(); --stops inherient code of elements that have events attatched to them
 })
 */
-
-
-var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
-    var superiorQ = numberQ - 1;
-};
-
-var toggleVisibility = () => {
-    if (document.querySelector('.save').style.visibility === 'visible') {
-        document.querySelector('.save').style.visibility = 'hidden';
-        document.querySelector('.cancel').style.visibility = 'hidden';
-    } else {
-        document.querySelector('.save').style.visibility = 'visible';
-        document.querySelector('.cancel').style.visibility = 'visible';
-    }
-};
-
-var toggleKey = (array, key) => {                   //function to cause eventListeners to be deaf
-    array.forEach(value => {
-        if (value === key) {
-            key = true;
-        } else {
-            element = false;
-        }
-    });
-}
-
-/*var superiorQ = numberQ + 1;      handle array stuff
-
-    for (n = 0; n <= superiorQ; n += 1) {
-        if (questionArray[n] == true) {
-        } else {
-            questionArray[n] = question;
-        }
-    } */
-
 
 
 
