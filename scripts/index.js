@@ -1,5 +1,17 @@
-var theMachine = [0];
 
+/*
+
+sharing a button with event listeners has become a problem, I need to learn how to remove them, unfortunately the lock idea although its cool does not handle the problem as when a listener is created they are either layered or the code associated with it is ran before the click, as when I change the boolean value locking it when i click it, it runs a past respose for the click  
+
+*/
+
+
+
+
+var theMachine = [0];
+var topicIndex=0;
+var cardIndex=0;
+                                                                        
 var topic = {
     topicName: '',
     numberQ: 0,
@@ -24,15 +36,15 @@ function Card(question, answer) {       //card constructor
     this.back = answer;
 }
 
-var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end
+var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end... preexisting function of this exist but soles the hardcode problem
     var copyMachine = new Array(array.length);
     for (n = 0; n <= array.length; n++) {  
         copyMachine[n] = array[n];
     }
-    theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to svae theMachine's value outside the function with calling array the parameter  
+    theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to save theMachine's value outside the function with calling array the parameter  
 }
 
-var newTopicKey = false;                                //I hate having to make this a lock game but js is dumb and won't let you cancel event listeners unless they are predefined functions
+var newTopicKey = false;                                //I hate having to make this a lock game but js is dumb and won't let you cancel event listeners unless they are predefined functions, either rewrite the code to call pne neat function or learn how to remove the listeners
 var selectTopicKey = false;
 var deleteTopicKey = false;
 var newCardKey = false;
@@ -45,9 +57,15 @@ var keyChain = [newTopicKey, selectTopicKey, deleteTopicKey, newCardKey, newCard
 
 var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
+var flipCardButton = document.querySelector('button[type=flipCard]');
 
-var newTopicButton = document.querySelector('button[type=newTopic]');
-var newCardButton = document.querySelector('button[type=newCard]');
+flipCardButton.addEventListener('click', (e1) => {
+flipIt()
+});
+
+var flipIt = (card) => {
+    document.querySelector('textarea').value = 'front of card';
+}
 
 var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
 
@@ -62,7 +80,7 @@ var addQuestion = () => {                            //adding a question, must u
             var question = '';
             question = document.querySelector('textarea').value;
             console.log(question);
-            document.querySelector('textarea').value = 'Enter Answer?';     //needs to be cut off as it's selected a second time on the second save
+            document.querySelector('textarea').value = 'Enter Answer?';    
             var answerSave = document.querySelector('button.save');
             var answerCancel = document.querySelector('button.cancel');
             newCardKey = false;
@@ -150,15 +168,48 @@ newTopicButton.addEventListener('click', (e) => {                       //creats
     e.preventDefault();
 });
 
+var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
+    var superiorQ = numberQ - 1;
+};
 
+var toggleVisibility = () => {
+    if (document.querySelector('.save').style.visibility === 'visible') {
+        document.querySelector('.save').style.visibility = 'hidden';
+        document.querySelector('.cancel').style.visibility = 'hidden';
+    } else {
+        document.querySelector('.save').style.visibility = 'visible';
+        document.querySelector('.cancel').style.visibility = 'visible';
+    }
+};
 
+var toggleOn = () => {
+        document.querySelector('.save').style.visibility = 'visible';
+        document.querySelector('.cancel').style.visibility = 'visible';  
+};
+
+var toggleKey = (array, key) => {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
+    array.forEach(value => {
+        if (value === key) {
+            key = true;
+        } else {
+            element = false;
+        }
+    });
+}
+
+/*var superiorQ = numberQ + 1;      handle array stuff
+    for (n = 0; n <= superiorQ; n += 1) {
+        if (questionArray[n] == true) {
+        } else {
+            questionArray[n] = question;
+        }
+    } */
+
+    
 //e.stopPropagation();
 //add another event llistener for 'enter'
 //  this.topicName = document.querySelector('textarea').value;     //this.topicName = document.querySelector('#textarea').value;
 //return null; 
-
-
-
 
 //  function AddTopic() {                               //trying to make constructor, happens after a click 
 //needs to be potentially told to create a new object
@@ -183,45 +234,6 @@ submitButton.addEventListener('click', (e)=> {
     e.preventDefault(); --stops inherient code of elements that have events attatched to them
 })
 */
-
-
-var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
-    var superiorQ = numberQ - 1;
-};
-
-var toggleVisibility = () => {
-    if (document.querySelector('.save').style.visibility === 'visible') {
-        document.querySelector('.save').style.visibility = 'hidden';
-        document.querySelector('.cancel').style.visibility = 'hidden';
-    } else {
-        document.querySelector('.save').style.visibility = 'visible';
-        document.querySelector('.cancel').style.visibility = 'visible';
-    }
-};
-
-var toggleOn = () => {
-        document.querySelector('.save').style.visibility = 'visible';
-        document.querySelector('.cancel').style.visibility = 'visible';  
-};
-
-var toggleKey = (array, key) => {                   //function to cause eventListeners to be deaf
-    array.forEach(value => {
-        if (value === key) {
-            key = true;
-        } else {
-            element = false;
-        }
-    });
-}
-
-/*var superiorQ = numberQ + 1;      handle array stuff
-    for (n = 0; n <= superiorQ; n += 1) {
-        if (questionArray[n] == true) {
-        } else {
-            questionArray[n] = question;
-        }
-    } */
-
 
 
 
