@@ -5,18 +5,13 @@ sharing a button with event listeners has become a problem, I need to learn how 
 
 */
 
-
-
-
 var theMachine = [0];
-var topicIndex=0;
-var cardIndex=0;
-                                                                        
+var topicIndex = 0;
+
 var topic = {
     topicName: '',
     numberQ: 0,
-    questionArray:[],
-    answerArray:[]   
+    cardArray: []
 }
 
 var card = {
@@ -27,8 +22,7 @@ var card = {
 function Topic(name) {                 //topic constructor
     this.topicName = name;
     this.numberQ = 0;
-    this.questionArray = new Array(0);
-    this.answerArray = new Array(0);
+    this.cardArray = new Array(0);
 }
 
 function Card(question, answer) {       //card constructor 
@@ -38,7 +32,7 @@ function Card(question, answer) {       //card constructor
 
 var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end... preexisting function of this exist but soles the hardcode problem
     var copyMachine = new Array(array.length);
-    for (n = 0; n <= array.length; n++) {  
+    for (n = 0; n <= array.length; n++) {
         copyMachine[n] = array[n];
     }
     theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to save theMachine's value outside the function with calling array the parameter  
@@ -60,78 +54,18 @@ var newCardButton = document.querySelector('button[type=newCard]');
 var flipCardButton = document.querySelector('button[type=flipCard]');
 
 flipCardButton.addEventListener('click', (e1) => {
-flipIt()
+    flipIt()
 });
 
-var flipIt = (card) => {
-    document.querySelector('textarea').value = 'front of card';
-}
-
-var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
-
-    if (newCardKey === true) {
-        document.querySelector('textarea').value = 'Enter Question?';
-        var saveButton = document.querySelector('button.save');
-        var cancelButton = document.querySelector('button.cancel');
-        toggleOn();
-
-        saveButton.addEventListener('click', (e1) => {                      //1st degree save
-            if (newCardKey===true) {
-            var question = '';
-            question = document.querySelector('textarea').value;
-            console.log(question);
-            document.querySelector('textarea').value = 'Enter Answer?';    
-            var answerSave = document.querySelector('button.save');
-            var answerCancel = document.querySelector('button.cancel');
-            newCardKey = false;
-            newCardKeySecondDegree = true;
-            toggleKey(keyChain, newCardKeySecondDegree);
-            e1.stopImmediatePropagation();
-            
-            answerSave.addEventListener('click', (e2) => {                  //2nd degree save
-                if (newCardKeySecondDegree === true) {
-                    var answer = '';
-                    answer = document.querySelector('textarea').value;
-                    console.log(answer);
-                    document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
-                    document.querySelector('textarea').value = 'Current Card Question';
-                    toggleVisibility();
-                    newCardKeySecondDegree = false;
-                    e2.stopImmediatePropagation();
-                }
-            });
-            answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
-                if (newCardKeySecondDegree === true) {
-                    document.querySelector('.ID').innerHTML = 'ID: ' + 'previoust ID';
-                    document.querySelector('textarea').value = 'Previous Card';
-                    toggleVisibility();
-                    newCardKeySecondDegree = false;
-                    e2.stopImmediatePropagation();
-                }
-            });
-        }
-        });
-        cancelButton.addEventListener('click', (e1) => {                        //1st degree cancel
-            if (newCardKey === true) {
-                toggleVisibility();
-                //write code to return to old card here
-                document.querySelector('.ID').innerHTML = 'ID: ' + 'Preveous ID'; //write code to old topic here
-                document.querySelector('textarea').value = 'Previous Card';
-                newCardKey = false;
-                e1.stopImmediatePropagation();
-            }
-        });
-    }
-};
-
-newCardButton.addEventListener('click', (e) => {           //impliments addQuestion()
-    newCardKey = true;
-    toggleKey(keyChain, newCardKey);
+newCardButton.addEventListener('click', (e) => {
     addQuestion();
-    e.preventDefault();
 });
 
 newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
+    addTopic();
+});
+
+var addTopic = () => {
     'use strict';
     document.querySelector('textarea').value = 'Define Topic?';         //everything good
     toggleOn();                                                     //show save/cancel buttons
@@ -144,12 +78,12 @@ newTopicButton.addEventListener('click', (e) => {                       //creats
         if (newTopicKey === true) {
 
             var contentHolder = document.querySelector('textarea');       //get the value inside the text area
-
+            console.log(contentHolder.value);
             document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
 
             //where we also need to add object constructor 
+            document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
 
-            console.log(contentHolder.value);
             toggleVisibility();
             newTopicKey = false;
             e1.stopImmediatePropagation();
@@ -165,8 +99,71 @@ newTopicButton.addEventListener('click', (e) => {                       //creats
             e1.stopImmediatePropagation();
         }
     });
-    e.preventDefault();
-});
+};
+
+var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
+
+    newCardKey = true;
+    toggleKey(keyChain, newCardKey);
+
+    if (newCardKey === true) {
+        document.querySelector('textarea').value = 'Enter Question?';
+        var saveButton = document.querySelector('button.save');
+        var cancelButton = document.querySelector('button.cancel');
+        toggleOn();
+
+        saveButton.addEventListener('click', (e1) => {                      //1st degree save
+            if (newCardKey === true) {
+                var question = '';
+                question = document.querySelector('textarea').value;
+                console.log(question);
+                document.querySelector('textarea').value = 'Enter Answer?';
+                var answerSave = document.querySelector('button.save');
+                var answerCancel = document.querySelector('button.cancel');
+                newCardKey = false;
+                newCardKeySecondDegree = true;
+                toggleKey(keyChain, newCardKeySecondDegree);
+                e1.stopImmediatePropagation();
+
+                answerSave.addEventListener('click', (e2) => {                  //2nd degree save
+                    if (newCardKeySecondDegree === true) {
+                        var answer = '';
+                        answer = document.querySelector('textarea').value;
+                        console.log(answer);
+                        document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
+                        document.querySelector('textarea').value = 'Current Card Question';
+                        toggleVisibility();
+                        newCardKeySecondDegree = false;
+                        e2.stopImmediatePropagation();
+                    }
+                });
+                answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
+                    if (newCardKeySecondDegree === true) {
+                        document.querySelector('.ID').innerHTML = 'ID: ' + 'previoust ID';
+                        document.querySelector('textarea').value = 'Previous Card';
+                        toggleVisibility();
+                        newCardKeySecondDegree = false;
+                        e2.stopImmediatePropagation();
+                    }
+                });
+            }
+        });
+        cancelButton.addEventListener('click', (e1) => {                        //1st degree cancel
+            if (newCardKey === true) {
+                toggleVisibility();
+                //write code to return to old card here
+                document.querySelector('.ID').innerHTML = 'ID: ' + 'Preveous ID'; //write code to old topic here
+                document.querySelector('textarea').value = 'Previous Card';
+                newCardKey = false;
+                e1.stopImmediatePropagation();
+            }
+        });
+    }
+};
+
+var flipIt = (card) => {
+    document.querySelector('textarea').value = 'front of card';
+}
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
     var superiorQ = numberQ - 1;
@@ -183,8 +180,8 @@ var toggleVisibility = () => {
 };
 
 var toggleOn = () => {
-        document.querySelector('.save').style.visibility = 'visible';
-        document.querySelector('.cancel').style.visibility = 'visible';  
+    document.querySelector('.save').style.visibility = 'visible';
+    document.querySelector('.cancel').style.visibility = 'visible';
 };
 
 var toggleKey = (array, key) => {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
@@ -205,7 +202,7 @@ var toggleKey = (array, key) => {                   //function to cause eventLis
         }
     } */
 
-    
+
 //e.stopPropagation();
 //add another event llistener for 'enter'
 //  this.topicName = document.querySelector('textarea').value;     //this.topicName = document.querySelector('#textarea').value;
