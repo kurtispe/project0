@@ -7,6 +7,7 @@ sharing a button with event listeners has become a problem, I need to learn how 
 
 var theMachine = [0];
 var topicIndex = 0;
+var btnPress = false;
 
 var topic = {
     topicName: '',
@@ -57,52 +58,101 @@ flipCardButton.addEventListener('click', (e1) => {
     flipIt()
 });
 
-newCardButton.addEventListener('click', (e) => {
-    addQuestion();
-});
+newCardButton.addEventListener('click', addQuestion);
+
 
 newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
     addTopic();
 });
 
-var addTopic = () => {
-    'use strict';
-    document.querySelector('textarea').value = 'Define Topic?';         //everything good
-    toggleOn();                                                     //show save/cancel buttons
-    var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+
+var hyperacusis = () =>{
+    //code to turn listeners back on
+}
+
+function deafen () {
+    //code to turn listeners off
+
+}
+
+
+function doQnA(string) {
+    document.querySelector('textarea').value = string;
+    var saveButton = document.querySelector('button.save');
     var cancelButton = document.querySelector('button.cancel');
-    newTopicKey = true;
-    toggleKey(keyChain, newTopicKey);
+    var res;
+    toggleOn();
 
     saveButton.addEventListener('click', (e1) => {
-        if (newTopicKey === true) {
-
-            var contentHolder = document.querySelector('textarea');       //get the value inside the text area
-            console.log(contentHolder.value);
-            document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
-
-            //where we also need to add object constructor 
-            document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
-
-            toggleVisibility();
-            newTopicKey = false;
-            e1.stopImmediatePropagation();
-        }
+        btnPress = true;
+        var contentHolder = document.querySelector('textarea');
+        console.log(contentHolder.value + ' from QnA');
+        toggleVisibility();
+        res = contentHolder;
+        e1.stopImmediatePropagation();
     });
 
     cancelButton.addEventListener('click', (e1) => {
-        if (newTopicKey === true) {
-            toggleVisibility();
-            document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
-            document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
-            newTopicKey = false;
-            e1.stopImmediatePropagation();
-        }
+        btnPress = true;
+        console.log('canceled from QnA');
+        toggleVisibility();
+        res = null;
+        e1.stopImmediatePropagation();
     });
+   
+    return res;
+}
+
+var addTopic = () => {
+    'use strict';
+    //  document.querySelector('textarea').value = 'Define Topic?';         //everything good
+    //  toggleOn();                                                     //show save/cancel buttons
+    //  var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+    // var cancelButton = document.querySelector('button.cancel');
+    // newTopicKey = true;
+    //  toggleKey(keyChain, newTopicKey);
+
+    var tpc = doQnA('Define Topic');
+    console.log('res saved outside of func: ' + tpc);
+    if (tpc) {
+        //  toggleVisibility();
+        document.querySelector('.topic').innerHTML = 'Topic: ' + tpc;
+    } else {
+        //  toggleVisibility();
+        document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
+        document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
+    }
+
+    /*  saveButton.addEventListener('click', (e1) => {
+          if (newTopicKey === true) {
+  
+              var contentHolder = document.querySelector('textarea');       //get the value inside the text area
+              console.log(contentHolder.value);
+              document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
+  
+              //where we also need to add object constructor 
+              document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
+  
+              toggleVisibility();
+              newTopicKey = false;
+              e1.stopImmediatePropagation();
+          }
+      });  
+  
+      cancelButton.addEventListener('click', (e1) => {
+          if (newTopicKey === true) {
+              toggleVisibility();
+              document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
+              document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
+              newTopicKey = false;
+              e1.stopImmediatePropagation();
+          }
+      }); */
 };
 
-var addQuestion = () => {                            //adding a question, must update question and answer array, should require an object as input
+function addQuestion  () {                            //adding a question, must update question and answer array, should require an object as input
 
+    console.log('how was i clicked?');
     newCardKey = true;
     toggleKey(keyChain, newCardKey);
 
@@ -169,7 +219,7 @@ var removeQuestion = () => {                        //removing a question, must 
     var superiorQ = numberQ - 1;
 };
 
-var toggleVisibility = () => {
+function toggleVisibility () {
     if (document.querySelector('.save').style.visibility === 'visible') {
         document.querySelector('.save').style.visibility = 'hidden';
         document.querySelector('.cancel').style.visibility = 'hidden';
@@ -179,12 +229,12 @@ var toggleVisibility = () => {
     }
 };
 
-var toggleOn = () => {
+function toggleOn  () {
     document.querySelector('.save').style.visibility = 'visible';
     document.querySelector('.cancel').style.visibility = 'visible';
 };
 
-var toggleKey = (array, key) => {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
+function toggleKey (array, key)  {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
     array.forEach(value => {
         if (value === key) {
             key = true;
