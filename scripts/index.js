@@ -7,7 +7,8 @@ sharing a button with event listeners has become a problem, I need to learn how 
 
 var theMachine = [0];
 var topicIndex = 0;
-var btnPress = false;
+var btnPressS = false;
+var btnPressC = false;
 
 var topic = {
     topicName: '',
@@ -63,31 +64,41 @@ flipCardButton.addEventListener('click', (e1) => {
 newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
 
-function repeatMe(boo, fn) {
-    if (!boo) {
-        setTimeout(repeatMe, 30);
-    } else {
-        fn();
-    }
-}
 
-function savedMe(){
-    btnPress = true;
+function savedMe() {                                             //runs code that any save input needs
+    btnPressS = true;
+    console.log(btnPressS);
     var contentHolder = document.querySelector('textarea');
     console.log(contentHolder.value + ' from saveMe Fn');
     optionsAreDown();
     toggleVisibility();
-    hyperacusis(); 
+    hyperacusis();
 }
-function canceledMe(){
-    btnPress = true;
+
+function canceledMe() {                                          //runs code that any cancel input needs
+    btnPressC = true;
     console.log('I was canceled');
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
 
-function doQnA(string) {
+
+
+function over(boo, fn) {
+if (!boo) {
+    console.log(boo);
+} else {
+    console.log('FUNCTION');
+    fn();
+}
+}
+
+function test(){ ha 
+    console.log('hi');
+}
+
+function doQnA(string) {                                            //sets up the Q n A, actually not working properly 
     document.querySelector('textarea').value = string;
     toggleOn();
     saveButton.addEventListener('click', savedMe);
@@ -95,14 +106,28 @@ function doQnA(string) {
 }
 
 function addTopic() {
-    'use strict'
-    btnPress=false;
+    'use strict';
+    btnPressS = false;
+    btnPressC = false;
     deafen();
+    setInterval(test, 500);
+   // reapeatMe(btnPressC, doTpcCnl);
     doQnA('Define Topic');
-    repeatMe(btnPress, savedMe);
-    repeatMe(btnPress, canceledMe);
-
 };
+
+function doTpcSvd() {                                              //code for topic save specifically
+    var text = document.querySelector('textarea').value;
+    document.querySelector('.topic').innerHTML = 'Topic: ' + text;
+    document.querySelector('.ID').innerHTML = 'ID: 0';
+    console.log('make a topic oject here')
+    document.querySelector('textarea').value = 'Pleas make a new card';
+}
+
+function doTpcCnl() {                                              //code for topic cancel specifically, might not actually be needed
+    document.querySelector('.topic').innerHTML = 'Previous Topic';
+    document.querySelector('textarea').value = 'Previous Question';
+}
+
 
 
 
