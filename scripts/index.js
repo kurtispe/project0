@@ -5,25 +5,27 @@ sharing a button with event listeners has become a problem, I need to learn how 
 
 */
 
-var theMachine = [0];
+var theMachine = [0];                      //core array of program
 var topicIndex = 0;
-var btnPressS = false;
+
+var btnPressS = false;                      //boo for trippig code
 var btnPressC = false;
 
-var topic = {
+var topicMail;                              //exterior identities for calling
+
+var topic = {                               //topic object, name, array, index
     topicName: '',
-    numberQ: 0,
+    numberIndex: 0,
     cardArray: []
 }
-
-var card = {
+var card = {                                    //card object, has QnA
     front: 'question',
     back: 'answer'
 }
 
 function Topic(name) {                 //topic constructor
     this.topicName = name;
-    this.numberQ = 0;
+    this.numberIndex = 0;
     this.cardArray = new Array(0);
 }
 
@@ -67,51 +69,54 @@ newTopicButton.addEventListener('click', addTopic);
 
 function savedMe() {                                             //runs code that any save input needs
     btnPressS = true;
-    console.log(btnPressS);
-    var contentHolder = document.querySelector('textarea');
-    console.log(contentHolder.value + ' from saveMe Fn');
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
-
 function canceledMe() {                                          //runs code that any cancel input needs
     btnPressC = true;
-    console.log('I was canceled');
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
 
 
-
-function over(boo, fn) {
+function letter(boo, fn, boo2, fn2) {                                          //code to see if a button has been pressed
 if (!boo) {
     console.log(boo);
 } else {
-    console.log('FUNCTION');
+    console.log('FUNCTION SAVE');
+    btnPressC = false;
+    btnPressS = false;
+    deliveredMail();
     fn();
 }
+if (!boo2) {
+    console.log(boo2);
+} else {
+    console.log('FUNCTION CANCEL');
+    btnPressC = false;
+    btnPressS = false;
+    deliveredMail();
+    fn2();
+}
 }
 
-function test(){ ha 
-    console.log('hi');
+function topicEnvelope(){                                           //will let me trigger code from an event listener without the code being directly tied to it, this simplifiys the amount of work needed to remove eventlisteners as all event listeners are now generic as specificity is chain reacted not directly tied to it
+    letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
-
-function doQnA(string) {                                            //sets up the Q n A, actually not working properly 
+function doQnA(string) {                                            //sets up the Q n A 
     document.querySelector('textarea').value = string;
     toggleOn();
     saveButton.addEventListener('click', savedMe);
     cancelButton.addEventListener('click', canceledMe);
 }
-
-function addTopic() {
+function addTopic() {                                               //sets up a new topic
     'use strict';
     btnPressS = false;
     btnPressC = false;
     deafen();
-    setInterval(test, 500);
-   // reapeatMe(btnPressC, doTpcCnl);
+    topicMail = setInterval(topicEnvelope, 500);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
     doQnA('Define Topic');
 };
 
@@ -238,6 +243,10 @@ function toggleOn() {
 function optionsAreDown() {
     saveButton.removeEventListener('click', savedMe);
     cancelButton.removeEventListener('click', canceledMe);
+}
+
+function deliveredMail() {
+    clearInterval(topicMail);
 }
 
 function toggleKey(array, key) {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
