@@ -61,18 +61,19 @@ flipCardButton.addEventListener('click', (e1) => {
 newCardButton.addEventListener('click', addQuestion);
 
 
-newTopicButton.addEventListener('click', (e) => {                       //creats new topic folder
-    addTopic();
-});
+newTopicButton.addEventListener('click', addTopic);
 
 
 var hyperacusis = () =>{
     //code to turn listeners back on
+    newTopicButton.addEventListener('click', addTopic);
+    newCardButton.addEventListener('click', addQuestion);
 }
 
 function deafen () {
     //code to turn listeners off
-
+    newCardButton.removeEventListener('click', addQuestion);
+    newTopicButton.removeEventListener('click', addTopic);
 }
 
 
@@ -103,16 +104,17 @@ function doQnA(string) {
     return res;
 }
 
-var addTopic = () => {
+function addTopic() {
     'use strict';
-    //  document.querySelector('textarea').value = 'Define Topic?';         //everything good
-    //  toggleOn();                                                     //show save/cancel buttons
-    //  var saveButton = document.querySelector('button.save');                 //create the buttons themselves
-    // var cancelButton = document.querySelector('button.cancel');
-    // newTopicKey = true;
-    //  toggleKey(keyChain, newTopicKey);
+    deafen();
+      document.querySelector('textarea').value = 'Define Topic?';         //everything good
+      toggleOn();                                                     //show save/cancel buttons
+      var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+     var cancelButton = document.querySelector('button.cancel');
+     newTopicKey = true;
+      toggleKey(keyChain, newTopicKey);
 
-    var tpc = doQnA('Define Topic');
+   /* var tpc = doQnA('Define Topic');
     console.log('res saved outside of func: ' + tpc);
     if (tpc) {
         //  toggleVisibility();
@@ -121,9 +123,9 @@ var addTopic = () => {
         //  toggleVisibility();
         document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
         document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
-    }
+    } */
 
-    /*  saveButton.addEventListener('click', (e1) => {
+      saveButton.addEventListener('click', (e1) => {
           if (newTopicKey === true) {
   
               var contentHolder = document.querySelector('textarea');       //get the value inside the text area
@@ -134,6 +136,7 @@ var addTopic = () => {
               document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
   
               toggleVisibility();
+              hyperacusis();
               newTopicKey = false;
               e1.stopImmediatePropagation();
           }
@@ -144,15 +147,16 @@ var addTopic = () => {
               toggleVisibility();
               document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
               document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
+              hyperacusis();
               newTopicKey = false;
               e1.stopImmediatePropagation();
           }
-      }); */
+      }); 
 };
 
 function addQuestion  () {                            //adding a question, must update question and answer array, should require an object as input
 
-    console.log('how was i clicked?');
+    deafen();
     newCardKey = true;
     toggleKey(keyChain, newCardKey);
 
@@ -173,6 +177,7 @@ function addQuestion  () {                            //adding a question, must 
                 newCardKey = false;
                 newCardKeySecondDegree = true;
                 toggleKey(keyChain, newCardKeySecondDegree);
+             
                 e1.stopImmediatePropagation();
 
                 answerSave.addEventListener('click', (e2) => {                  //2nd degree save
@@ -184,6 +189,7 @@ function addQuestion  () {                            //adding a question, must 
                         document.querySelector('textarea').value = 'Current Card Question';
                         toggleVisibility();
                         newCardKeySecondDegree = false;
+                        hyperacusis();
                         e2.stopImmediatePropagation();
                     }
                 });
@@ -193,6 +199,7 @@ function addQuestion  () {                            //adding a question, must 
                         document.querySelector('textarea').value = 'Previous Card';
                         toggleVisibility();
                         newCardKeySecondDegree = false;
+                        hyperacusis();
                         e2.stopImmediatePropagation();
                     }
                 });
@@ -205,6 +212,7 @@ function addQuestion  () {                            //adding a question, must 
                 document.querySelector('.ID').innerHTML = 'ID: ' + 'Preveous ID'; //write code to old topic here
                 document.querySelector('textarea').value = 'Previous Card';
                 newCardKey = false;
+                hyperacusis();
                 e1.stopImmediatePropagation();
             }
         });
