@@ -59,22 +59,9 @@ flipCardButton.addEventListener('click', (e1) => {
 });
 
 newCardButton.addEventListener('click', addQuestion);
-
-
 newTopicButton.addEventListener('click', addTopic);
 
 
-var hyperacusis = () =>{
-    //code to turn listeners back on
-    newTopicButton.addEventListener('click', addTopic);
-    newCardButton.addEventListener('click', addQuestion);
-}
-
-function deafen () {
-    //code to turn listeners off
-    newCardButton.removeEventListener('click', addQuestion);
-    newTopicButton.removeEventListener('click', addTopic);
-}
 
 
 function doQnA(string) {
@@ -90,6 +77,7 @@ function doQnA(string) {
         console.log(contentHolder.value + ' from QnA');
         toggleVisibility();
         res = contentHolder;
+        hyperacusis();
         e1.stopImmediatePropagation();
     });
 
@@ -98,23 +86,25 @@ function doQnA(string) {
         console.log('canceled from QnA');
         toggleVisibility();
         res = null;
+        hyperacusis();
         e1.stopImmediatePropagation();
     });
-   
     return res;
 }
 
 function addTopic() {
     'use strict';
-    deafen();
-      document.querySelector('textarea').value = 'Define Topic?';         //everything good
-      toggleOn();                                                     //show save/cancel buttons
-      var saveButton = document.querySelector('button.save');                 //create the buttons themselves
-     var cancelButton = document.querySelector('button.cancel');
-     newTopicKey = true;
-      toggleKey(keyChain, newTopicKey);
+    /*  deafen();
+        document.querySelector('textarea').value = 'Define Topic?';         //everything good
+        toggleOn();                                                     //show save/cancel buttons
+        var saveButton = document.querySelector('button.save');                 //create the buttons themselves
+       var cancelButton = document.querySelector('button.cancel');
+       newTopicKey = true;
+        toggleKey(keyChain, newTopicKey); 
+    */
 
-   /* var tpc = doQnA('Define Topic');
+    deafen();
+    var tpc = doQnA('Define Topic');
     console.log('res saved outside of func: ' + tpc);
     if (tpc) {
         //  toggleVisibility();
@@ -123,38 +113,39 @@ function addTopic() {
         //  toggleVisibility();
         document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
         document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
-    } */
+    }
+    
 
-      saveButton.addEventListener('click', (e1) => {
-          if (newTopicKey === true) {
-  
-              var contentHolder = document.querySelector('textarea');       //get the value inside the text area
-              console.log(contentHolder.value);
-              document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
-  
-              //where we also need to add object constructor 
-              document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
-  
-              toggleVisibility();
-              hyperacusis();
-              newTopicKey = false;
-              e1.stopImmediatePropagation();
-          }
-      });  
-  
-      cancelButton.addEventListener('click', (e1) => {
-          if (newTopicKey === true) {
-              toggleVisibility();
-              document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
-              document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
-              hyperacusis();
-              newTopicKey = false;
-              e1.stopImmediatePropagation();
-          }
-      }); 
+    /*   saveButton.addEventListener('click', (e1) => {
+           if (newTopicKey === true) {
+   
+               var contentHolder = document.querySelector('textarea');       //get the value inside the text area
+               console.log(contentHolder.value);
+               document.querySelector('.topic').innerHTML = 'Topic: ' + contentHolder.value; //adjust display for Topic
+   
+               //where we also need to add object constructor 
+               document.querySelector('textarea').value = 'Please Create a New Card'; //write code to return to old card here
+   
+               toggleVisibility();
+               hyperacusis();
+               newTopicKey = false;
+               e1.stopImmediatePropagation();
+           }
+       });  
+   
+       cancelButton.addEventListener('click', (e1) => {
+           if (newTopicKey === true) {
+               toggleVisibility();
+               document.querySelector('textarea').value = 'Previous Card'; //write code to return to old card here
+               document.querySelector('.topic').innerHTML = 'Topic: ' + 'Previous Topic'; //write code to old topic here
+               hyperacusis();
+               newTopicKey = false;
+               e1.stopImmediatePropagation();
+           }
+       }); */
 };
 
-function addQuestion  () {                            //adding a question, must update question and answer array, should require an object as input
+function addQuestion() {                            //adding a question, must update question and answer array, should require an object as input
 
     deafen();
     newCardKey = true;
@@ -177,7 +168,7 @@ function addQuestion  () {                            //adding a question, must 
                 newCardKey = false;
                 newCardKeySecondDegree = true;
                 toggleKey(keyChain, newCardKeySecondDegree);
-             
+
                 e1.stopImmediatePropagation();
 
                 answerSave.addEventListener('click', (e2) => {                  //2nd degree save
@@ -218,7 +209,14 @@ function addQuestion  () {                            //adding a question, must 
         });
     }
 };
-
+function hyperacusis() {                                             //code to turn listeners back on
+    newTopicButton.addEventListener('click', addTopic);
+    newCardButton.addEventListener('click', addQuestion);
+}
+function deafen() {                                                     //code to turn listeners off
+    newCardButton.removeEventListener('click', addQuestion);
+    newTopicButton.removeEventListener('click', addTopic);
+}
 var flipIt = (card) => {
     document.querySelector('textarea').value = 'front of card';
 }
@@ -227,7 +225,7 @@ var removeQuestion = () => {                        //removing a question, must 
     var superiorQ = numberQ - 1;
 };
 
-function toggleVisibility () {
+function toggleVisibility() {
     if (document.querySelector('.save').style.visibility === 'visible') {
         document.querySelector('.save').style.visibility = 'hidden';
         document.querySelector('.cancel').style.visibility = 'hidden';
@@ -237,12 +235,12 @@ function toggleVisibility () {
     }
 };
 
-function toggleOn  () {
+function toggleOn() {
     document.querySelector('.save').style.visibility = 'visible';
     document.querySelector('.cancel').style.visibility = 'visible';
 };
 
-function toggleKey (array, key)  {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
+function toggleKey(array, key) {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
     array.forEach(value => {
         if (value === key) {
             key = true;
