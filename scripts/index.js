@@ -12,6 +12,8 @@ var btnPressS = false;                      //boo for trippig code
 var btnPressC = false;
 
 var topicMail;                              //exterior identities for calling
+var cardMail;
+
 
 var topic = {                               //topic object, name, array, index
     topicName: '',
@@ -42,16 +44,7 @@ var moreMachine = (array) => {                        //takes an array, copies i
     theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to save theMachine's value outside the function with calling array the parameter  
 }
 
-var newTopicKey = false;                                //I hate having to make this a lock game but js is dumb and won't let you cancel event listeners unless they are predefined functions, either rewrite the code to call pne neat function or learn how to remove the listeners
-var selectTopicKey = false;
-var deleteTopicKey = false;
-var newCardKey = false;
-var newCardKeySecondDegree = false;
-var editCardKey = false;
-var flipCardKey = false;
-var nextCardKey = false;
-var deleteCardKey = false;
-var keyChain = [newTopicKey, selectTopicKey, deleteTopicKey, newCardKey, newCardKeySecondDegree, editCardKey, flipCardKey, nextCardKey, deleteCardKey];
+
 
 var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
@@ -66,6 +59,60 @@ flipCardButton.addEventListener('click', (e1) => {
 newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
 
+function cardEnvelope(){
+    letter(btnPressS, questSave1 ,btnPressC, questCancel);
+}
+
+function cardEnvelope2(){
+    letter(btnPressS, questSave2 ,btnPressC, questCancel);
+}
+
+function questSave2(){                                                      //creates the card
+    resp = document.querySelector('textarea').value;
+    console.log('create new card object here')
+    document.querySelector('.topic').innerHTML = 'Same Topic';
+    document.querySelector('.ID').innerHTML = 'ID: Current Question';
+    document.querySelector('textarea').value = input;
+    deliveredMail();
+    btnPressC = false;
+    btnPressS = false;
+}
+
+function questSave1() {                                                         //stores question
+    input = document.querySelector('textarea').value;
+    console.log('question saved as: ' + input);
+    deafen();
+    deliveredMail();
+    doQnA('Define the Answer');
+    cardMail = setInterval(cardEnvelope2, 500);
+}
+
+function questCancel() {                                                    //canceles request, can probably make generic
+    console.log('canceled from quest call');
+    document.querySelector('.topic').innerHTML = 'Same Topic';
+    document.querySelector('.ID').innerHTML = 'ID: Previous id';
+    document.querySelector('textarea').value = 'Previous Q';
+}
+
+function addQuestion() {                            //adding a question, must update question and answer array, should require an object as input
+    'use strict';
+    deafen();
+    btnPressS = false;
+    btnPressC = false;
+    var input;
+    var resp;
+    cardMail = setInterval(cardEnvelope, 500);
+    doQnA('Enter Question');
+};
+
+function addTopic() {                                               //sets up a new topic
+    'use strict';
+    btnPressS = false;
+    btnPressC = false;
+    deafen();
+    topicMail = setInterval(topicEnvelope, 500);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
+    doQnA('Define Topic');
+};
 
 function savedMe() {                                             //runs code that any save input needs
     btnPressS = true;
@@ -74,14 +121,13 @@ function savedMe() {                                             //runs code tha
     hyperacusis();
 }
 function canceledMe() {                                          //runs code that any cancel input needs
-    btnPressC = true;
+    btnPressC = true;           
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
 
-
-function letter(boo, fn, boo2, fn2) {                                          //code to see if a button has been pressed
+function letter(boo, fn, boo2, fn2) {                          //code to see if a button has been pressed, works as intended
 if (!boo) {
     console.log(boo);
 } else {
@@ -133,82 +179,6 @@ function doTpcCnl() {                                              //code for to
     document.querySelector('textarea').value = 'Previous Question';
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-function addQuestion() {                            //adding a question, must update question and answer array, should require an object as input
-
-    deafen();
-    newCardKey = true;
-    toggleKey(keyChain, newCardKey);
-
-    if (newCardKey === true) {
-        document.querySelector('textarea').value = 'Enter Question?';
-        var saveButton = document.querySelector('button.save');
-        var cancelButton = document.querySelector('button.cancel');
-        toggleOn();
-
-        saveButton.addEventListener('click', (e1) => {                      //1st degree save
-            if (newCardKey === true) {
-                var question = '';
-                question = document.querySelector('textarea').value;
-                console.log(question);
-                document.querySelector('textarea').value = 'Enter Answer?';
-                var answerSave = document.querySelector('button.save');
-                var answerCancel = document.querySelector('button.cancel');
-                newCardKey = false;
-                newCardKeySecondDegree = true;
-                toggleKey(keyChain, newCardKeySecondDegree);
-
-                e1.stopImmediatePropagation();
-
-                answerSave.addEventListener('click', (e2) => {                  //2nd degree save
-                    if (newCardKeySecondDegree === true) {
-                        var answer = '';
-                        answer = document.querySelector('textarea').value;
-                        console.log(answer);
-                        document.querySelector('.ID').innerHTML = 'ID: ' + 'add code for array';        //add array stuff
-                        document.querySelector('textarea').value = 'Current Card Question';
-                        toggleVisibility();
-                        newCardKeySecondDegree = false;
-                        hyperacusis();
-                        e2.stopImmediatePropagation();
-                    }
-                });
-                answerCancel.addEventListener('click', (e2) => {                        //2nd degree cancel
-                    if (newCardKeySecondDegree === true) {
-                        document.querySelector('.ID').innerHTML = 'ID: ' + 'previoust ID';
-                        document.querySelector('textarea').value = 'Previous Card';
-                        toggleVisibility();
-                        newCardKeySecondDegree = false;
-                        hyperacusis();
-                        e2.stopImmediatePropagation();
-                    }
-                });
-            }
-        });
-        cancelButton.addEventListener('click', (e1) => {                        //1st degree cancel
-            if (newCardKey === true) {
-                toggleVisibility();
-                //write code to return to old card here
-                document.querySelector('.ID').innerHTML = 'ID: ' + 'Preveous ID'; //write code to old topic here
-                document.querySelector('textarea').value = 'Previous Card';
-                newCardKey = false;
-                hyperacusis();
-                e1.stopImmediatePropagation();
-            }
-        });
-    }
-};
 function hyperacusis() {                                             //code to turn listeners back on
     newTopicButton.addEventListener('click', addTopic);
     newCardButton.addEventListener('click', addQuestion);
@@ -222,7 +192,7 @@ var flipIt = (card) => {
 }
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
-    var superiorQ = numberQ - 1;
+    var superiorQ = numberIndex - 1;
 };
 
 function toggleVisibility() {
@@ -240,24 +210,17 @@ function toggleOn() {
     document.querySelector('.cancel').style.visibility = 'visible';
 };
 
-function optionsAreDown() {
+function optionsAreDown() {                                     //removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
     cancelButton.removeEventListener('click', canceledMe);
 }
 
-function deliveredMail() {
+function deliveredMail() {                                       //removes save/cancel reactions
     clearInterval(topicMail);
+    clearInterval(cardMail); 
 }
 
-function toggleKey(array, key) {                   //function to cause eventListeners to be mute.. doesn't work as inetended both by logic and by how event listeners run
-    array.forEach(value => {
-        if (value === key) {
-            key = true;
-        } else {
-            element = false;
-        }
-    });
-}
+
 
 /*var superiorQ = numberQ + 1;      handle array stuff
     for (n = 0; n <= superiorQ; n += 1) {
