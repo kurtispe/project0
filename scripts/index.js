@@ -1,22 +1,24 @@
-
+// daft punk variables 
 var theMachine = [0];                      //core array of program
 var topicIndex = 0;
 
 var btnPressS = false;                      //boo for trippig code
 var btnPressC = false;
-
-var topicMail;                              //exterior identities for calling
-var cardMail;
+var mail;
 
 var topic = {                               //topic object, name, array, index
     topicName: '',
     numberIndex: 0,
-    cardArray: []
+    cardArray: [0]
 }
-var card = {                                    //card object, has QnA
+var card = {                                    //card object, has QnA, true is front
     front: 'question',
-    back: 'answer'
+    back: 'answer',
+    boo: true                               
 }
+
+var testCard = new Card('Im the front', 'im the back'); //is this it's own object or piggy backing?
+
 function Topic(name) {                 //topic constructor
     this.topicName = name;
     this.numberIndex = 0;
@@ -25,31 +27,24 @@ function Topic(name) {                 //topic constructor
 function Card(question, answer) {       //card constructor 
     this.front = question;
     this.back = answer;
-}
-var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end... preexisting function of this exist but soles the hardcode problem
-    var copyMachine = new Array(array.length);
-    for (n = 0; n <= array.length; n++) {
-        copyMachine[n] = array[n];
-    }
-    theMachine = copyMachine;                          //I want my c++ pointer, I don't know how to save theMachine's value outside the function with calling array the parameter  
+    this.boo = true;
 }
 
-
-//Buttons Section
+// Buttons Section
 var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
 var flipCardButton = document.querySelector('button[type=flipCard]');
+var editCardButton = document.querySelector('button[type=editCard]');
 var saveButton = document.querySelector('button.save');
 var cancelButton = document.querySelector('button.cancel');
 
-//Event listener section
-flipCardButton.addEventListener('click', (e1) => {
-    flipIt()
-});
+// Event listener section
+flipCardButton.addEventListener('click', flip);
 newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
+editCardButton.addEventListener('click', edit);
 
-//Code that sets up event chain from main control buttons
+// Code that sets up event chain from main control buttons
 function addQuestion() {                                             //adding a question, must update question and answer array, should require an object as input
     'use strict';
     deafen();
@@ -57,7 +52,7 @@ function addQuestion() {                                             //adding a 
     btnPressC = false;
     var input;
     var resp;
-    cardMail = setInterval(cardEnvelope, 500);
+    mail = setInterval(cardEnvelope, 250);
     doQnA('Enter Question');
 };
 function addTopic() {                                               //sets up a new topic
@@ -65,66 +60,70 @@ function addTopic() {                                               //sets up a 
     btnPressS = false;
     btnPressC = false;
     deafen();
-    topicMail = setInterval(topicEnvelope, 500);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
+    mail = setInterval(topicEnvelope, 250);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
     doQnA('Define Topic');
 };
+function flip() {                                                   //flip the card, needs code to find location
+    //code to get location of card
+    flipIt(testCard);
+}
+function edit() {
+    deafen();
+    var temp = document.querySelector('textarea').value;
+    mail = setInterval(editEnvelope, 250);
+    doQnA(temp);
+}
 
-//Everything mail related.. so functionality tied to save/cancel
-function letter(boo, fn, boo2, fn2) {                          
-if (!boo) {
-    console.log(boo);
-} else {
-    console.log('FUNCTION SAVE');
-    btnPressC = false;
-    btnPressS = false;
-    deliveredMail();
-    fn();
+// Everything mail related.. so functionality tied to save/cancel
+function letter(boo, fn, boo2, fn2) {
+    if (!boo) {
+        console.log('waiting');
+    } else {
+        console.log('FUNCTION SAVE');
+        btnPressC = false;
+        btnPressS = false;
+        clearInterval(mail);
+        fn();
+    }
+    if (!boo2) {
+    } else {
+        console.log('FUNCTION CANCEL');
+        btnPressC = false;
+        btnPressS = false;
+        clearInterval(mail);
+        fn2();
+    }
 }
-if (!boo2) {
-    console.log(boo2);
-} else {
-    console.log('FUNCTION CANCEL');
-    btnPressC = false;
-    btnPressS = false;
-    deliveredMail();
-    fn2();
+function cardEnvelope() {
+    letter(btnPressS, questSave1, btnPressC, questCancel);
 }
+function cardEnvelope2() {
+    letter(btnPressS, questSave2, btnPressC, questCancel);
 }
-function cardEnvelope(){
-    letter(btnPressS, questSave1 ,btnPressC, questCancel);
-}
-function cardEnvelope2(){
-    letter(btnPressS, questSave2 ,btnPressC, questCancel);
-}
-function topicEnvelope(){                                           //will let me trigger code from an event listener without the code being directly tied to it, this simplifiys the amount of work needed to remove eventlisteners as all event listeners are now generic as specificity is chain reacted not directly tied to it
+function topicEnvelope() {                      
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
-function deliveredMail() {                                       //removes save/cancel reactions
-    clearInterval(topicMail);
-    clearInterval(cardMail); 
+function editEnvelope() {
+    letter(btnPressS, editIt, btnPressC, genericCancel);
 }
 
-//code delivered via mail, the words on the paper
-function questSave2(){                                                      //creates the card
+// code related to specific actions
+function questSave2() {                                                      //creates the card
     resp = document.querySelector('textarea').value;
     console.log('create new card object here')
     document.querySelector('.topic').innerHTML = 'Same Topic';
     document.querySelector('.ID').innerHTML = 'ID: Current Question';
     document.querySelector('textarea').value = input;
-    deliveredMail();
-    btnPressC = false;
-    btnPressS = false;
+    clearInterval(mail);
 }
 function questSave1() {                                                         //stores question
     input = document.querySelector('textarea').value;
     console.log('question saved as: ' + input);
     deafen();
-    deliveredMail();
     doQnA('Define the Answer');
-    cardMail = setInterval(cardEnvelope2, 500);
+    mail = setInterval(cardEnvelope2, 250);
 }
 function questCancel() {                                                    //canceles request, can probably make generic
-    console.log('canceled from quest call');
     document.querySelector('.topic').innerHTML = 'Same Topic';
     document.querySelector('.ID').innerHTML = 'ID: Previous id';
     document.querySelector('textarea').value = 'Previous Q';
@@ -133,6 +132,9 @@ function doTpcSvd() {                                              //code for to
     var text = document.querySelector('textarea').value;
     document.querySelector('.topic').innerHTML = 'Topic: ' + text;
     document.querySelector('.ID').innerHTML = 'ID: 0';
+    //var a = new Topic(text, 0, 0);
+    //theMachine.push(a);
+    //readMe(theMachine);
     console.log('make a topic oject here')
     document.querySelector('textarea').value = 'Pleas make a new card';
 }
@@ -140,8 +142,29 @@ function doTpcCnl() {                                              //code for to
     document.querySelector('.topic').innerHTML = 'Previous Topic';
     document.querySelector('textarea').value = 'Previous Question';
 }
+function flipIt(card) {
+    if (card.boo) {
+        document.querySelector('textarea').value = card.back;
+        card.boo = false;
+    } else {
+        document.querySelector('textarea').value = card.front;
+        card.boo = true;
+    }
+}
+function editIt() {
+    //code to get current card ID
+    //put that response in for card
+    edt(testCard); //probably just lump these 2gether once we can
+}
+var edt = (card) => {
+    if (card.boo) {
+        card.front = document.querySelector('textarea').value;
+    } else {
+        card.back = document.querySelector('textarea').value;
+    }
+}
 
-//code used as tools, these let me work code safer and faster
+// code used as tools, these let me work code safer and faster
 function savedMe() {                                             //runs code that any save input needs
     btnPressS = true;
     optionsAreDown();
@@ -149,10 +172,15 @@ function savedMe() {                                             //runs code tha
     hyperacusis();
 }
 function canceledMe() {                                          //runs code that any cancel input needs
-    btnPressC = true;           
+    btnPressC = true;
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
+}
+function genericCancel(){
+    document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
+    document.querySelector('.ID').innerHTML = 'ID: Previous id';
+    document.querySelector('textarea').value = 'Previous Card';
 }
 function doQnA(string) {                                            //sets up the Q n A 
     document.querySelector('textarea').value = string;
@@ -163,10 +191,14 @@ function doQnA(string) {                                            //sets up th
 function hyperacusis() {                                             //code to turn listeners back on
     newTopicButton.addEventListener('click', addTopic);
     newCardButton.addEventListener('click', addQuestion);
+    flipCardButton.addEventListener('click', flip);
+    editCardButton.addEventListener('click', edit);
 }
 function deafen() {                                                     //code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
     newTopicButton.removeEventListener('click', addTopic);
+    flipCardButton.removeEventListener('click', flip);
+    editCardButton.removeEventListener('click', edit);
 }
 function optionsAreDown() {                                     //removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
@@ -185,19 +217,22 @@ function toggleOn() {                                               //force butt
     document.querySelector('.save').style.visibility = 'visible';
     document.querySelector('.cancel').style.visibility = 'visible';
 };
-
-
-
-
-
-
-var flipIt = (card) => {
-    document.querySelector('textarea').value = 'front of card';
+function readMe(array) {
+    array.forEach(element => {
+        console.log(element.topicName);
+        console.log('I am at ' + element.numberIndex);
+        console.log('I have ' + element.cardArray.length + ' cards');
+    });
 }
+
+
+
+
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
     var superiorQ = numberIndex - 1;
 };
+
 
 
 
