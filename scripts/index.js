@@ -1,10 +1,4 @@
 
-/*
-
-sharing a button with event listeners has become a problem, I need to learn how to remove them, unfortunately the lock idea although its cool does not handle the problem as when a listener is created they are either layered or the code associated with it is ran before the click, as when I change the boolean value locking it when i click it, it runs a past respose for the click  
-
-*/
-
 var theMachine = [0];                      //core array of program
 var topicIndex = 0;
 
@@ -13,7 +7,6 @@ var btnPressC = false;
 
 var topicMail;                              //exterior identities for calling
 var cardMail;
-
 
 var topic = {                               //topic object, name, array, index
     topicName: '',
@@ -24,18 +17,15 @@ var card = {                                    //card object, has QnA
     front: 'question',
     back: 'answer'
 }
-
 function Topic(name) {                 //topic constructor
     this.topicName = name;
     this.numberIndex = 0;
     this.cardArray = new Array(0);
 }
-
 function Card(question, answer) {       //card constructor 
     this.front = question;
     this.back = answer;
 }
-
 var moreMachine = (array) => {                        //takes an array, copies it, and adds an empty element at the end... preexisting function of this exist but soles the hardcode problem
     var copyMachine = new Array(array.length);
     for (n = 0; n <= array.length; n++) {
@@ -45,56 +35,22 @@ var moreMachine = (array) => {                        //takes an array, copies i
 }
 
 
-
+//Buttons Section
 var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
 var flipCardButton = document.querySelector('button[type=flipCard]');
 var saveButton = document.querySelector('button.save');
 var cancelButton = document.querySelector('button.cancel');
 
+//Event listener section
 flipCardButton.addEventListener('click', (e1) => {
     flipIt()
 });
-
 newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
 
-function cardEnvelope(){
-    letter(btnPressS, questSave1 ,btnPressC, questCancel);
-}
-
-function cardEnvelope2(){
-    letter(btnPressS, questSave2 ,btnPressC, questCancel);
-}
-
-function questSave2(){                                                      //creates the card
-    resp = document.querySelector('textarea').value;
-    console.log('create new card object here')
-    document.querySelector('.topic').innerHTML = 'Same Topic';
-    document.querySelector('.ID').innerHTML = 'ID: Current Question';
-    document.querySelector('textarea').value = input;
-    deliveredMail();
-    btnPressC = false;
-    btnPressS = false;
-}
-
-function questSave1() {                                                         //stores question
-    input = document.querySelector('textarea').value;
-    console.log('question saved as: ' + input);
-    deafen();
-    deliveredMail();
-    doQnA('Define the Answer');
-    cardMail = setInterval(cardEnvelope2, 500);
-}
-
-function questCancel() {                                                    //canceles request, can probably make generic
-    console.log('canceled from quest call');
-    document.querySelector('.topic').innerHTML = 'Same Topic';
-    document.querySelector('.ID').innerHTML = 'ID: Previous id';
-    document.querySelector('textarea').value = 'Previous Q';
-}
-
-function addQuestion() {                            //adding a question, must update question and answer array, should require an object as input
+//Code that sets up event chain from main control buttons
+function addQuestion() {                                             //adding a question, must update question and answer array, should require an object as input
     'use strict';
     deafen();
     btnPressS = false;
@@ -104,7 +60,6 @@ function addQuestion() {                            //adding a question, must up
     cardMail = setInterval(cardEnvelope, 500);
     doQnA('Enter Question');
 };
-
 function addTopic() {                                               //sets up a new topic
     'use strict';
     btnPressS = false;
@@ -114,20 +69,8 @@ function addTopic() {                                               //sets up a 
     doQnA('Define Topic');
 };
 
-function savedMe() {                                             //runs code that any save input needs
-    btnPressS = true;
-    optionsAreDown();
-    toggleVisibility();
-    hyperacusis();
-}
-function canceledMe() {                                          //runs code that any cancel input needs
-    btnPressC = true;           
-    optionsAreDown();
-    toggleVisibility();
-    hyperacusis();
-}
-
-function letter(boo, fn, boo2, fn2) {                          //code to see if a button has been pressed, works as intended
+//Everything mail related.. so functionality tied to save/cancel
+function letter(boo, fn, boo2, fn2) {                          
 if (!boo) {
     console.log(boo);
 } else {
@@ -147,25 +90,45 @@ if (!boo2) {
     fn2();
 }
 }
-
+function cardEnvelope(){
+    letter(btnPressS, questSave1 ,btnPressC, questCancel);
+}
+function cardEnvelope2(){
+    letter(btnPressS, questSave2 ,btnPressC, questCancel);
+}
 function topicEnvelope(){                                           //will let me trigger code from an event listener without the code being directly tied to it, this simplifiys the amount of work needed to remove eventlisteners as all event listeners are now generic as specificity is chain reacted not directly tied to it
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
-function doQnA(string) {                                            //sets up the Q n A 
-    document.querySelector('textarea').value = string;
-    toggleOn();
-    saveButton.addEventListener('click', savedMe);
-    cancelButton.addEventListener('click', canceledMe);
+function deliveredMail() {                                       //removes save/cancel reactions
+    clearInterval(topicMail);
+    clearInterval(cardMail); 
 }
-function addTopic() {                                               //sets up a new topic
-    'use strict';
-    btnPressS = false;
-    btnPressC = false;
-    deafen();
-    topicMail = setInterval(topicEnvelope, 500);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
-    doQnA('Define Topic');
-};
 
+//code delivered via mail, the words on the paper
+function questSave2(){                                                      //creates the card
+    resp = document.querySelector('textarea').value;
+    console.log('create new card object here')
+    document.querySelector('.topic').innerHTML = 'Same Topic';
+    document.querySelector('.ID').innerHTML = 'ID: Current Question';
+    document.querySelector('textarea').value = input;
+    deliveredMail();
+    btnPressC = false;
+    btnPressS = false;
+}
+function questSave1() {                                                         //stores question
+    input = document.querySelector('textarea').value;
+    console.log('question saved as: ' + input);
+    deafen();
+    deliveredMail();
+    doQnA('Define the Answer');
+    cardMail = setInterval(cardEnvelope2, 500);
+}
+function questCancel() {                                                    //canceles request, can probably make generic
+    console.log('canceled from quest call');
+    document.querySelector('.topic').innerHTML = 'Same Topic';
+    document.querySelector('.ID').innerHTML = 'ID: Previous id';
+    document.querySelector('textarea').value = 'Previous Q';
+}
 function doTpcSvd() {                                              //code for topic save specifically
     var text = document.querySelector('textarea').value;
     document.querySelector('.topic').innerHTML = 'Topic: ' + text;
@@ -173,12 +136,30 @@ function doTpcSvd() {                                              //code for to
     console.log('make a topic oject here')
     document.querySelector('textarea').value = 'Pleas make a new card';
 }
-
 function doTpcCnl() {                                              //code for topic cancel specifically, might not actually be needed
     document.querySelector('.topic').innerHTML = 'Previous Topic';
     document.querySelector('textarea').value = 'Previous Question';
 }
 
+//code used as tools, these let me work code safer and faster
+function savedMe() {                                             //runs code that any save input needs
+    btnPressS = true;
+    optionsAreDown();
+    toggleVisibility();
+    hyperacusis();
+}
+function canceledMe() {                                          //runs code that any cancel input needs
+    btnPressC = true;           
+    optionsAreDown();
+    toggleVisibility();
+    hyperacusis();
+}
+function doQnA(string) {                                            //sets up the Q n A 
+    document.querySelector('textarea').value = string;
+    toggleOn();
+    saveButton.addEventListener('click', savedMe);
+    cancelButton.addEventListener('click', canceledMe);
+}
 function hyperacusis() {                                             //code to turn listeners back on
     newTopicButton.addEventListener('click', addTopic);
     newCardButton.addEventListener('click', addQuestion);
@@ -187,15 +168,11 @@ function deafen() {                                                     //code t
     newCardButton.removeEventListener('click', addQuestion);
     newTopicButton.removeEventListener('click', addTopic);
 }
-var flipIt = (card) => {
-    document.querySelector('textarea').value = 'front of card';
+function optionsAreDown() {                                     //removes save/cancel listeners
+    saveButton.removeEventListener('click', savedMe);
+    cancelButton.removeEventListener('click', canceledMe);
 }
-
-var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
-    var superiorQ = numberIndex - 1;
-};
-
-function toggleVisibility() {
+function toggleVisibility() {                                   //code that makes buttons appear
     if (document.querySelector('.save').style.visibility === 'visible') {
         document.querySelector('.save').style.visibility = 'hidden';
         document.querySelector('.cancel').style.visibility = 'hidden';
@@ -204,21 +181,29 @@ function toggleVisibility() {
         document.querySelector('.cancel').style.visibility = 'visible';
     }
 };
-
-function toggleOn() {
+function toggleOn() {                                               //force buttons on
     document.querySelector('.save').style.visibility = 'visible';
     document.querySelector('.cancel').style.visibility = 'visible';
 };
 
-function optionsAreDown() {                                     //removes save/cancel listeners
-    saveButton.removeEventListener('click', savedMe);
-    cancelButton.removeEventListener('click', canceledMe);
+
+
+
+
+
+var flipIt = (card) => {
+    document.querySelector('textarea').value = 'front of card';
 }
 
-function deliveredMail() {                                       //removes save/cancel reactions
-    clearInterval(topicMail);
-    clearInterval(cardMail); 
-}
+var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
+    var superiorQ = numberIndex - 1;
+};
+
+
+
+
+
+
 
 
 
