@@ -3,6 +3,7 @@
 var theMachine = [0];                      //core array of program
 var topicIndex = 0;
 var testArray = ['Goat', 'Big Boats', 'aMSa', 'Mango'];
+var testNum = 0;
 
 var btnPressS = false;                      //boo for trippig code
 var btnPressC = false;
@@ -21,6 +22,7 @@ var card = {                                    //card object, has QnA, true is 
 
 var testCard = new Card('Im the front', 'im the back'); //is this it's own object or piggy backing?
 
+//constructors
 function Topic(name) {                 //topic constructor
     this.topicName = name;
     this.numberIndex = 0;
@@ -40,6 +42,7 @@ var editCardButton = document.querySelector('button[type=editCard]');
 var selectTopicButton = document.querySelector('button[type=selectTopic]');
 var saveButton = document.querySelector('button.save');
 var cancelButton = document.querySelector('button.cancel');
+var nextCardButton = document.querySelector('button[type=selectCard]');
 
 // Event listener section
 flipCardButton.addEventListener('click', flip);
@@ -47,6 +50,7 @@ newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
 editCardButton.addEventListener('click', edit);
 selectTopicButton.addEventListener('click', select);
+nextCardButton.addEventListener('click', next);
 
 // Code that sets up event chain from main control buttons
 function addQuestion() {                                             //adding a question, must update question and answer array, should require an object as input
@@ -83,6 +87,9 @@ function select() {
     mail = setInterval(selectEnvelope, 250);
     doQnA(text);
 }
+function next() {                                                    //code NEEDED
+    testNum = nextOne(testArray, testNum);                           //this is stupid, look into me;
+}
 
 // Everything mail related.. so functionality tied to save/cancel
 function letter(boo, fn, boo2, fn2) {
@@ -116,7 +123,7 @@ function topicEnvelope() {
 function editEnvelope() {
     letter(btnPressS, editIt, btnPressC, genericCancel);
 }
-function selectEnvelope(){
+function selectEnvelope() {
     letter(btnPressS, selectSave, btnPressC, genericCancel);
 }
 
@@ -176,16 +183,26 @@ var edt = (card) => {
         card.back = document.querySelector('textarea').value;
     }
 }
-function selectSave(){                                              //code NEEDED
+function selectSave() {                                              //code NEEDED
     var text = document.querySelector('textarea').value;
     var indexy;
-    if(compArray(testArray,text)){
+    if (compArray(testArray, text)) {
         indexy = testArray.indexOf(text);
         console.log('Topic index found at: ' + indexy);
         //code to display Q1 of Topic
     } else {
         genericCancel();
     }
+}
+var nextOne = (array, number) => {                                    //code NEEDED
+    if (number === (array.length - 1)) {
+        number = 0;
+    } else {
+        number++;
+    };
+    document.querySelector('textarea').value = array[number];
+    console.log(number);
+    return number;
 }
 
 // code used as tools, these let me work code safer and faster
@@ -218,6 +235,7 @@ function hyperacusis() {                                             //code to t
     flipCardButton.addEventListener('click', flip);
     editCardButton.addEventListener('click', edit);
     selectTopicButton.addEventListener('click', select);
+    nextCardButton.addEventListener('click', next);
 }
 function deafen() {                                                     //code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
@@ -225,6 +243,7 @@ function deafen() {                                                     //code t
     flipCardButton.removeEventListener('click', flip);
     editCardButton.removeEventListener('click', edit);
     selectTopicButton.removeEventListener('click', select);
+    nextCardButton.removeEventListener('click', next);
 }
 function optionsAreDown() {                                     //removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
@@ -256,7 +275,7 @@ function displayArray(array) {
         if (n === array.length - 1) {
             text = text + array[n];
         } else {
-        text = text + array[n] + ', ';
+            text = text + array[n] + ', ';
         }
     }
     return text;
@@ -266,14 +285,11 @@ function compArray(array, string) {
         if (string === array[n]) {
             return true;
             console.log('we are the same');
-        } 
+        }
     }
     return false;
 }
 
-var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
-    var superiorQ = numberIndex - 1;
-};
 
 
 
