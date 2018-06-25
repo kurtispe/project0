@@ -1,6 +1,8 @@
+
 // daft punk variables 
 var theMachine = [0];                      //core array of program
 var topicIndex = 0;
+var testArray = ['Goat', 'Big Boats', 'aMSa', 'Mango'];
 
 var btnPressS = false;                      //boo for trippig code
 var btnPressC = false;
@@ -14,7 +16,7 @@ var topic = {                               //topic object, name, array, index
 var card = {                                    //card object, has QnA, true is front
     front: 'question',
     back: 'answer',
-    boo: true                               
+    boo: true
 }
 
 var testCard = new Card('Im the front', 'im the back'); //is this it's own object or piggy backing?
@@ -35,6 +37,7 @@ var newTopicButton = document.querySelector('button[type=newTopic]');
 var newCardButton = document.querySelector('button[type=newCard]');
 var flipCardButton = document.querySelector('button[type=flipCard]');
 var editCardButton = document.querySelector('button[type=editCard]');
+var selectTopicButton = document.querySelector('button[type=selectTopic]');
 var saveButton = document.querySelector('button.save');
 var cancelButton = document.querySelector('button.cancel');
 
@@ -43,6 +46,7 @@ flipCardButton.addEventListener('click', flip);
 newCardButton.addEventListener('click', addQuestion);
 newTopicButton.addEventListener('click', addTopic);
 editCardButton.addEventListener('click', edit);
+selectTopicButton.addEventListener('click', select);
 
 // Code that sets up event chain from main control buttons
 function addQuestion() {                                             //adding a question, must update question and answer array, should require an object as input
@@ -73,6 +77,12 @@ function edit() {
     mail = setInterval(editEnvelope, 250);
     doQnA(temp);
 }
+function select() {
+    deafen();
+    var text = displayArray(testArray);
+    mail = setInterval(selectEnvelope, 250);
+    doQnA(text);
+}
 
 // Everything mail related.. so functionality tied to save/cancel
 function letter(boo, fn, boo2, fn2) {
@@ -100,11 +110,14 @@ function cardEnvelope() {
 function cardEnvelope2() {
     letter(btnPressS, questSave2, btnPressC, questCancel);
 }
-function topicEnvelope() {                      
+function topicEnvelope() {
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
 function editEnvelope() {
     letter(btnPressS, editIt, btnPressC, genericCancel);
+}
+function selectEnvelope(){
+    letter(btnPressS, selectSave, btnPressC, genericCancel);
 }
 
 // code related to specific actions
@@ -128,7 +141,7 @@ function questCancel() {                                                    //ca
     document.querySelector('.ID').innerHTML = 'ID: Previous id';
     document.querySelector('textarea').value = 'Previous Q';
 }
-function doTpcSvd() {                                              //code for topic save specifically
+function doTpcSvd() {                                              //code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
     document.querySelector('.topic').innerHTML = 'Topic: ' + text;
     document.querySelector('.ID').innerHTML = 'ID: 0';
@@ -151,7 +164,7 @@ function flipIt(card) {
         card.boo = true;
     }
 }
-function editIt() {
+function editIt() {                                                 //code NEEDED
     //code to get current card ID
     //put that response in for card
     edt(testCard); //probably just lump these 2gether once we can
@@ -161,6 +174,17 @@ var edt = (card) => {
         card.front = document.querySelector('textarea').value;
     } else {
         card.back = document.querySelector('textarea').value;
+    }
+}
+function selectSave(){                                              //code NEEDED
+    var text = document.querySelector('textarea').value;
+    var indexy;
+    if(compArray(testArray,text)){
+        indexy = testArray.indexOf(text);
+        console.log('Topic index found at: ' + indexy);
+        //code to display Q1 of Topic
+    } else {
+        genericCancel();
     }
 }
 
@@ -177,7 +201,7 @@ function canceledMe() {                                          //runs code tha
     toggleVisibility();
     hyperacusis();
 }
-function genericCancel(){
+function genericCancel() {
     document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
     document.querySelector('.ID').innerHTML = 'ID: Previous id';
     document.querySelector('textarea').value = 'Previous Card';
@@ -193,12 +217,14 @@ function hyperacusis() {                                             //code to t
     newCardButton.addEventListener('click', addQuestion);
     flipCardButton.addEventListener('click', flip);
     editCardButton.addEventListener('click', edit);
+    selectTopicButton.addEventListener('click', select);
 }
 function deafen() {                                                     //code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
     newTopicButton.removeEventListener('click', addTopic);
     flipCardButton.removeEventListener('click', flip);
     editCardButton.removeEventListener('click', edit);
+    selectTopicButton.removeEventListener('click', select);
 }
 function optionsAreDown() {                                     //removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
@@ -224,10 +250,26 @@ function readMe(array) {
         console.log('I have ' + element.cardArray.length + ' cards');
     });
 }
-
-
-
-
+function displayArray(array) {
+    var text = 'Select one of the following: ';
+    for (n = 0; n < array.length; n++) {
+        if (n === array.length - 1) {
+            text = text + array[n];
+        } else {
+        text = text + array[n] + ', ';
+        }
+    }
+    return text;
+}
+function compArray(array, string) {
+    for (n = 0; n < array.length; n++) {
+        if (string === array[n]) {
+            return true;
+            console.log('we are the same');
+        } 
+    }
+    return false;
+}
 
 var removeQuestion = () => {                        //removing a question, must remove a Q'n'A
     var superiorQ = numberIndex - 1;
@@ -279,7 +321,3 @@ submitButton.addEventListener('click', (e)=> {
     e.preventDefault(); --stops inherient code of elements that have events attatched to them
 })
 */
-
-
-
-
