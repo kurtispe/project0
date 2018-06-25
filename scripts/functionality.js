@@ -53,7 +53,7 @@ selectTopicButton.addEventListener('click', select);
 nextCardButton.addEventListener('click', next);
 
 // Code that sets up event chain from main control buttons
-function addQuestion() {                                             //adding a question, must update question and answer array, should require an object as input
+function addQuestion() {//.........................................Adding a question, must update question and answer array, should require an object as input
     'use strict';
     deafen();
     btnPressS = false;
@@ -63,7 +63,7 @@ function addQuestion() {                                             //adding a 
     mail = setInterval(cardEnvelope, 250);
     doQnA('Enter Question');
 };
-function addTopic() {                                               //sets up a new topic
+function addTopic() {//............................................Sets up a new topic
     'use strict';
     btnPressS = false;
     btnPressC = false;
@@ -71,23 +71,23 @@ function addTopic() {                                               //sets up a 
     mail = setInterval(topicEnvelope, 250);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
     doQnA('Define Topic');
 };
-function flip() {                                                   //flip the card, needs code to find location
+function flip() {//................................................flip the card, needs code to find location
     //code to get location of card
     flipIt(testCard);
 }
-function edit() {
+function edit() {//................................................Lets us change an existing card content
     deafen();
     var temp = document.querySelector('textarea').value;
     mail = setInterval(editEnvelope, 250);
     doQnA(temp);
 }
-function select() {
+function select() {//..............................................Lets you select the topic
     deafen();
     var text = displayArray(testArray);
     mail = setInterval(selectEnvelope, 250);
     doQnA(text);
 }
-function next() {                                                    //code NEEDED
+function next() {//................................................Advance to the next card
     testNum = nextOne(testArray, testNum);                           //this is stupid, look into me;
 }
 
@@ -117,7 +117,7 @@ function cardEnvelope() {
 function cardEnvelope2() {
     letter(btnPressS, questSave2, btnPressC, questCancel);
 }
-function topicEnvelope() {
+function topicEnvelope() {//.......................................
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
 function editEnvelope() {
@@ -128,7 +128,7 @@ function selectEnvelope() {
 }
 
 // code related to specific actions
-function questSave2() {                                                      //creates the card
+function questSave2() {//..........................................Creates the card
     resp = document.querySelector('textarea').value;
     console.log('create new card object here')
     document.querySelector('.topic').innerHTML = 'Same Topic';
@@ -136,19 +136,19 @@ function questSave2() {                                                      //c
     document.querySelector('textarea').value = input;
     clearInterval(mail);
 }
-function questSave1() {                                                         //stores question
+function questSave1() {//..........................................Ctores question
     input = document.querySelector('textarea').value;
     console.log('question saved as: ' + input);
     deafen();
     doQnA('Define the Answer');
     mail = setInterval(cardEnvelope2, 250);
 }
-function questCancel() {                                                    //canceles request, can probably make generic
+function questCancel() {//.........................................Canceles request, can probably make generic
     document.querySelector('.topic').innerHTML = 'Same Topic';
     document.querySelector('.ID').innerHTML = 'ID: Previous id';
     document.querySelector('textarea').value = 'Previous Q';
 }
-function doTpcSvd() {                                              //code NEEDED: for topic save specifically
+function doTpcSvd() {//............................................Code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
     document.querySelector('.topic').innerHTML = 'Topic: ' + text;
     document.querySelector('.ID').innerHTML = 'ID: 0';
@@ -158,11 +158,11 @@ function doTpcSvd() {                                              //code NEEDED
     console.log('make a topic oject here')
     document.querySelector('textarea').value = 'Pleas make a new card';
 }
-function doTpcCnl() {                                              //code for topic cancel specifically, might not actually be needed
+function doTpcCnl() {//............................................Code for topic cancel specifically, might not actually be needed
     document.querySelector('.topic').innerHTML = 'Previous Topic';
     document.querySelector('textarea').value = 'Previous Question';
 }
-function flipIt(card) {
+function flipIt(card) {//..........................................
     if (card.boo) {
         document.querySelector('textarea').value = card.back;
         card.boo = false;
@@ -171,19 +171,19 @@ function flipIt(card) {
         card.boo = true;
     }
 }
-function editIt() {                                                 //code NEEDED
+function editIt() {//..............................................Code NEEDED
     //code to get current card ID
     //put that response in for card
     edt(testCard); //probably just lump these 2gether once we can
 }
-var edt = (card) => {
+var edt = (card) => {//............................................
     if (card.boo) {
         card.front = document.querySelector('textarea').value;
     } else {
         card.back = document.querySelector('textarea').value;
     }
 }
-function selectSave() {                                              //code NEEDED
+function selectSave() {//..........................................Code NEEDED
     var text = document.querySelector('textarea').value;
     var indexy;
     if (compArray(testArray, text)) {
@@ -194,7 +194,7 @@ function selectSave() {                                              //code NEED
         genericCancel();
     }
 }
-var nextOne = (array, number) => {                                    //code NEEDED
+var nextOne = (array, number) => {//...............................Code NEEDED
     if (number === (array.length - 1)) {
         number = 0;
     } else {
@@ -206,30 +206,30 @@ var nextOne = (array, number) => {                                    //code NEE
 }
 
 // code used as tools, these let me work code safer and faster
-function savedMe() {                                             //runs code that any save input needs
+function savedMe() {//.............................................Runs code that any save input needs
     btnPressS = true;
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
-function canceledMe() {                                          //runs code that any cancel input needs
+function canceledMe() {//..........................................Runs code that any cancel input needs
     btnPressC = true;
     optionsAreDown();
     toggleVisibility();
     hyperacusis();
 }
-function genericCancel() {
+function genericCancel() {//.......................................Generic cancel code
     document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
     document.querySelector('.ID').innerHTML = 'ID: Previous id';
     document.querySelector('textarea').value = 'Previous Card';
 }
-function doQnA(string) {                                            //sets up the Q n A 
+function doQnA(string) {//.........................................Sets up the Q n A 
     document.querySelector('textarea').value = string;
     toggleOn();
     saveButton.addEventListener('click', savedMe);
     cancelButton.addEventListener('click', canceledMe);
 }
-function hyperacusis() {                                             //code to turn listeners back on
+function hyperacusis() {//.........................................Code to turn listeners back on
     newTopicButton.addEventListener('click', addTopic);
     newCardButton.addEventListener('click', addQuestion);
     flipCardButton.addEventListener('click', flip);
@@ -237,7 +237,7 @@ function hyperacusis() {                                             //code to t
     selectTopicButton.addEventListener('click', select);
     nextCardButton.addEventListener('click', next);
 }
-function deafen() {                                                     //code to turn listeners off
+function deafen() {//..............................................Code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
     newTopicButton.removeEventListener('click', addTopic);
     flipCardButton.removeEventListener('click', flip);
@@ -245,11 +245,11 @@ function deafen() {                                                     //code t
     selectTopicButton.removeEventListener('click', select);
     nextCardButton.removeEventListener('click', next);
 }
-function optionsAreDown() {                                     //removes save/cancel listeners
+function optionsAreDown() {//......................................Removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
     cancelButton.removeEventListener('click', canceledMe);
 }
-function toggleVisibility() {                                   //code that makes buttons appear
+function toggleVisibility() {//....................................Code that makes buttons appear
     if (document.querySelector('.save').style.visibility === 'visible') {
         document.querySelector('.save').style.visibility = 'hidden';
         document.querySelector('.cancel').style.visibility = 'hidden';
@@ -258,18 +258,18 @@ function toggleVisibility() {                                   //code that make
         document.querySelector('.cancel').style.visibility = 'visible';
     }
 };
-function toggleOn() {                                               //force buttons on
+function toggleOn() {//............................................Force buttons on
     document.querySelector('.save').style.visibility = 'visible';
     document.querySelector('.cancel').style.visibility = 'visible';
 };
-function readMe(array) {
+function readMe(array) {//.........................................Display stuff about topic
     array.forEach(element => {
         console.log(element.topicName);
         console.log('I am at ' + element.numberIndex);
         console.log('I have ' + element.cardArray.length + ' cards');
     });
 }
-function displayArray(array) {
+function displayArray(array) {//...................................Display array
     var text = 'Select one of the following: ';
     for (n = 0; n < array.length; n++) {
         if (n === array.length - 1) {
@@ -280,7 +280,7 @@ function displayArray(array) {
     }
     return text;
 }
-function compArray(array, string) {
+function compArray(array, string) {//..............................Compare an array with an option
     for (n = 0; n < array.length; n++) {
         if (string === array[n]) {
             return true;
