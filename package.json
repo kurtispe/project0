@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/kurtispe/project0#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mongodb": "^3.0.10"
   }
 }

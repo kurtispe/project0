@@ -1,10 +1,10 @@
 
 // Daft punk variables 
-var theMachine = [0];                    
+var theMachine = [0];
 var topicIndex = 0;
 
 // Variables for manipulation
-var btnPressS = false;                      
+var btnPressS = false;
 var btnPressC = false;
 var mail;
 
@@ -91,7 +91,8 @@ function select() {//..............................................Lets you sele
     doQnA(text);
 }
 function next() {//................................................Code NEEDED: Advance to the next card
-    testNum = nextOne(testArray, testNum);                           //this is stupid, look into me;
+    var number = document.querySelector('#ID').innerHTML;
+    number = nextOne(testArray, number);                           
 }
 function deleteTopic() {//.........................................Removes a Topic: specs NEEDED
     deafen();
@@ -100,9 +101,9 @@ function deleteTopic() {//.........................................Removes a Top
     doQnA(text);
 }
 function deleteCard() {//..........................................Removes a Card: specs NEEDED
-   var number = document.querySelector('#ID').innerHTML;
-   testArray.splice(number, 1);
-   genericCancel();
+    var number = document.querySelector('#ID').innerHTML;
+    testArray.splice(number, 1);
+    genericCancel();
 }
 
 // Everything mail related.. so functionality tied to save/cancel
@@ -145,12 +146,11 @@ function deleteEnvelope() {//......................................Content Holde
 }
 
 // Code related to specific actions
-function questSave2() {//..........................................Creates the card
+function questSave2() {//..........................................Code NEEDED: Creates the card
     resp = document.querySelector('textarea').value;
-    console.log('create new card object here')
-    document.querySelector('.topic').innerHTML = 'Same Topic';
-    document.querySelector('.ID').innerHTML = 'ID: Current Question';
-    document.querySelector('textarea').value = input;
+    console.log('create new card object here and add to array') //use resp and input for front and back
+    //need to display current card
+    genericCancel();
     clearInterval(mail);
 }
 function questSave1() {//..........................................Stores question
@@ -162,10 +162,10 @@ function questSave1() {//..........................................Stores questi
 }
 function doTpcSvd() {//............................................Code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
-    if(compArray(testArray,text)){
-    document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
-    document.querySelector('#ID').innerHTML = 'Previous id';
-    document.querySelector('textarea').value = 'Sorry, Topic already exist, cannot make new Topic';
+    if (compArray(testArray, text)) {
+        document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
+        document.querySelector('#ID').innerHTML = 'Previous id';
+        document.querySelector('textarea').value = 'Sorry, Topic already exist, cannot make new Topic';
     } else {
         document.querySelector('.topic').innerHTML = 'Topic: ' + text;
         document.querySelector('#ID').innerHTML = '0';
@@ -214,11 +214,10 @@ function selectSave() {//..........................................Code NEEDED
         genericCancel();
     }
 }
-function confirmDelete () {//.......................................Code NEEDED: Remove and truncate array
+function confirmDelete() {//.......................................Code NEEDED: Remove and truncate array
     var text = document.querySelector('textarea').value;
     var indexy;
     var text = document.querySelector('textarea').value;
-    var indexy;
     if (compArray(testArray, text)) {
         indexy = testArray.indexOf(text);
         console.log('Delete topicfound at index: ' + indexy);
@@ -228,14 +227,14 @@ function confirmDelete () {//.......................................Code NEEDED:
     }
 }
 var nextOne = (array, number) => {//...............................Code NEEDED
-    if (number === (array.length - 1)) {
+    if (number >= (array.length - 1)) {               
         number = 0;
     } else {
         number++;
     };
     document.querySelector('textarea').value = array[number];
     console.log(number);
-    document.querySelector('#ID').innerHTML= number;
+    document.querySelector('#ID').innerHTML = number;
     return number;
 }
 
@@ -254,7 +253,8 @@ function canceledMe() {//..........................................Runs code tha
 }
 function genericCancel() {//.......................................Generic cancel code
     document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
-    document.querySelector('#ID').innerHTML = 'Previous id';
+    var num = document.querySelector('#ID').innerHTML
+    document.querySelector('#ID').innerHTML = num;
     document.querySelector('textarea').value = 'Previous Card';
 }
 function doQnA(string) {//.........................................Sets up the Q n A 
@@ -318,7 +318,7 @@ function displayArray(array) {//...................................Display array
     }
     return text;
 }
-function compArray(array, string) {//..............................Compare an array with an option
+function compArray(array, string) {//..............................Compare an array element with string, returns true if =
     for (n = 0; n < array.length; n++) {
         if (string === array[n]) {
             return true;
