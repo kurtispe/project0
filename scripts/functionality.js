@@ -1,14 +1,14 @@
 
-// daft punk variables 
+// Daft punk variables 
 var theMachine = [0];                    
 var topicIndex = 0;
 
-//variables for manipulation
+// Variables for manipulation
 var btnPressS = false;                      
 var btnPressC = false;
 var mail;
 
-//objects
+// Objects
 var topic = {//...................................................Topic object, name, array, index
     topicName: '',
     numberIndex: 0,
@@ -47,7 +47,7 @@ nextCardButton.addEventListener('click', next);
 deleteTopicButton.addEventListener('click', deleteTopic);
 deleteCardButton.addEventListener('click', deleteCard);
 
-//constructors
+// Constructors
 function Topic(name) {//...........................................Topic constructor
     this.topicName = name;
     this.numberIndex = 0;
@@ -144,7 +144,7 @@ function deleteEnvelope(){//.......................................Content Holde
     letter(btnPressS, confirmDelete, btnPressC, genericCancel);
 }
 
-// code related to specific actions
+// Code related to specific actions
 function questSave2() {//..........................................Creates the card
     resp = document.querySelector('textarea').value;
     console.log('create new card object here')
@@ -233,7 +233,7 @@ var nextOne = (array, number) => {//...............................Code NEEDED
     return number;
 }
 
-// code used as tools, these let me work code safer and faster
+// Code used as tools, these let me work code safer and faster
 function savedMe() {//.............................................Runs code that any save input needs
     btnPressS = true;
     optionsAreDown();
