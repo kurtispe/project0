@@ -140,7 +140,7 @@ function editEnvelope() {//........................................Content Holde
 function selectEnvelope() {//......................................Content Holder
     letter(btnPressS, selectSave, btnPressC, genericCancel);
 }
-function deleteEnvelope(){//.......................................Content Holder
+function deleteEnvelope() {//......................................Content Holder
     letter(btnPressS, confirmDelete, btnPressC, genericCancel);
 }
 
@@ -162,14 +162,20 @@ function questSave1() {//..........................................Stores questi
 }
 function doTpcSvd() {//............................................Code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
-    document.querySelector('.topic').innerHTML = 'Topic: ' + text;
-    document.querySelector('#ID').innerHTML = '0';
-    testArray.push(text);//........................................Look at me now
-    //var a = new Topic(text, 0, 0);
-    //theMachine.push(a);
-    //readMe(theMachine);
-    console.log('make a topic oject here');
-    document.querySelector('textarea').value = 'Pleas make a new card';
+    if(compArray(testArray,text)){
+    document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
+    document.querySelector('#ID').innerHTML = 'Previous id';
+    document.querySelector('textarea').value = 'Sorry, Topic already exist, cannot make new Topic';
+    } else {
+        document.querySelector('.topic').innerHTML = 'Topic: ' + text;
+        document.querySelector('#ID').innerHTML = '0';
+        testArray.push(text);//........................................Look at me now
+        //var a = new Topic(text, 0, 0);
+        //theMachine.push(a);
+        //readMe(theMachine);
+        console.log('make a topic oject here');
+        document.querySelector('textarea').value = 'Pleas make a new card';
+    }
 }
 function doTpcCnl() {//............................................Code for topic cancel specifically, might not actually be needed
     document.querySelector('.topic').innerHTML = 'Previous Topic';
@@ -208,7 +214,7 @@ function selectSave() {//..........................................Code NEEDED
         genericCancel();
     }
 }
-function confirmDelete (){//.......................................Code NEEDED: Remove and truncate array
+function confirmDelete () {//.......................................Code NEEDED: Remove and truncate array
     var text = document.querySelector('textarea').value;
     var indexy;
     var text = document.querySelector('textarea').value;
