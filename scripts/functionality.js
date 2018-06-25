@@ -1,28 +1,29 @@
 
 // daft punk variables 
-var theMachine = [0];                      //core array of program
+var theMachine = [0];                    
 var topicIndex = 0;
-var testArray = ['Goat', 'Big Boats', 'aMSa', 'Mango'];
-var testNum = 0;
 
-var btnPressS = false;                      //boo for trippig code
+//variables for manipulation
+var btnPressS = false;                      
 var btnPressC = false;
 var mail;
 
-var topic = {                               //topic object, name, array, index
+//objects
+var topic = {//...................................................Topic object, name, array, index
     topicName: '',
     numberIndex: 0,
     cardArray: [0]
 }
-var card = {                                    //card object, has QnA, true is front
+var card = {//....................................................Card object, has front/back, true is front
     front: 'question',
     back: 'answer',
     boo: true
 }
 
-var testCard = new Card('Im the front', 'im the back'); //is this it's own object or piggy backing?
-
-
+//tools for testing
+var testArray = ['Goat', 'Big Boats', 'aMSa', 'Mango'];
+var testNum = 0;
+var testCard = new Card('Im the front', 'im the back');
 
 // Buttons Section
 var newTopicButton = document.querySelector('button[type=newTopic]');
@@ -62,8 +63,6 @@ function Card(question, answer) {//................................Card construc
 function addQuestion() {//.........................................Adding a question, must update question and answer array, should require an object as input
     'use strict';
     deafen();
-    btnPressS = false;
-    btnPressC = false;
     var input;
     var resp;
     mail = setInterval(cardEnvelope, 250);
@@ -71,8 +70,6 @@ function addQuestion() {//.........................................Adding a ques
 };
 function addTopic() {//............................................Sets up a new topic
     'use strict';
-    btnPressS = false;
-    btnPressC = false;
     deafen();
     mail = setInterval(topicEnvelope, 250);                                //letter and envelope required as setInterval will not repeatedly run Fn with parameters
     doQnA('Define Topic');
@@ -105,8 +102,7 @@ function deleteTopic() {//.........................................Removes a Top
 function deleteCard() {//..........................................Removes a Card: specs NEEDED
    var number = document.querySelector('#ID').innerHTML;
    testArray.splice(number, 1);
-   //code to display previous card
-   
+   genericCancel();
 }
 
 // Everything mail related.. so functionality tied to save/cancel
@@ -130,10 +126,10 @@ function letter(boo, fn, boo2, fn2) {//............................Chains respon
     }
 }
 function cardEnvelope() {//........................................Content Holder
-    letter(btnPressS, questSave1, btnPressC, questCancel);
+    letter(btnPressS, questSave1, btnPressC, genericCancel);
 }
 function cardEnvelope2() {//.......................................Content Holder
-    letter(btnPressS, questSave2, btnPressC, questCancel);
+    letter(btnPressS, questSave2, btnPressC, genericCancel);
 }
 function topicEnvelope() {//.......................................Content Holder
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
@@ -164,26 +160,23 @@ function questSave1() {//..........................................Stores questi
     doQnA('Define the Answer');
     mail = setInterval(cardEnvelope2, 250);
 }
-function questCancel() {//.........................................Canceles request, can probably make generic
-    document.querySelector('.topic').innerHTML = 'Same Topic';
-    document.querySelector('.ID').innerHTML = 'ID: Previous id';
-    document.querySelector('textarea').value = 'Previous Q';
-}
 function doTpcSvd() {//............................................Code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
     document.querySelector('.topic').innerHTML = 'Topic: ' + text;
-    document.querySelector('.ID').innerHTML = 'ID: 0';
+    document.querySelector('#ID').innerHTML = '0';
+    testArray.push(text);//........................................Look at me now
     //var a = new Topic(text, 0, 0);
     //theMachine.push(a);
     //readMe(theMachine);
-    console.log('make a topic oject here')
+    console.log('make a topic oject here');
     document.querySelector('textarea').value = 'Pleas make a new card';
 }
 function doTpcCnl() {//............................................Code for topic cancel specifically, might not actually be needed
     document.querySelector('.topic').innerHTML = 'Previous Topic';
     document.querySelector('textarea').value = 'Previous Question';
 }
-function flipIt(card) {//..........................................
+function flipIt(card) {//..........................................Code NEEDEDFlips the card
+    //code to get current card ID
     if (card.boo) {
         document.querySelector('textarea').value = card.back;
         card.boo = false;
@@ -197,7 +190,7 @@ function editIt() {//..............................................Code NEEDED
     //put that response in for card
     edt(testCard); //probably just lump these 2gether once we can
 }
-var edt = (card) => {//............................................
+var edt = (card) => {//............................................lets me match formatting
     if (card.boo) {
         card.front = document.querySelector('textarea').value;
     } else {
@@ -255,7 +248,7 @@ function canceledMe() {//..........................................Runs code tha
 }
 function genericCancel() {//.......................................Generic cancel code
     document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
-    document.querySelector('.ID').innerHTML = 'ID: Previous id';
+    document.querySelector('#ID').innerHTML = 'Previous id';
     document.querySelector('textarea').value = 'Previous Card';
 }
 function doQnA(string) {//.........................................Sets up the Q n A 
@@ -272,6 +265,7 @@ function hyperacusis() {//.........................................Code to turn 
     selectTopicButton.addEventListener('click', select);
     nextCardButton.addEventListener('click', next);
     deleteTopicButton.addEventListener('click', deleteTopic);
+    deleteCardButton.addEventListener('click', deleteCard);
 }
 function deafen() {//..............................................Code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
@@ -281,6 +275,7 @@ function deafen() {//..............................................Code to turn 
     selectTopicButton.removeEventListener('click', select);
     nextCardButton.removeEventListener('click', next);
     deleteTopicButton.removeEventListener('click', deleteTopic);
+    deleteCardButton.removeEventListener('click', deleteCard);
 }
 function optionsAreDown() {//......................................Removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
@@ -326,52 +321,3 @@ function compArray(array, string) {//..............................Compare an ar
     }
     return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*var superiorQ = numberQ + 1;      handle array stuff
-    for (n = 0; n <= superiorQ; n += 1) {
-        if (questionArray[n] == true) {
-        } else {
-            questionArray[n] = question;
-        }
-    } */
-
-
-//e.stopPropagation();
-//add another event llistener for 'enter'
-//  this.topicName = document.querySelector('textarea').value;     //this.topicName = document.querySelector('#textarea').value;
-//return null; 
-
-//  function AddTopic() {                               //trying to make constructor, happens after a click 
-//needs to be potentially told to create a new object
-//add an 'enter' 
-
-
-//                                        = document.querySelector('#textarea').value; --will specificallt return value, instead of the entirety of the element  
-//}
-
-/* in class stuff, look at me later:
-var formElement = document.querySelector('textarea'[]);
-var formElement1 = document.forms[0];  --can select stuff off of expected elements, allready in the code
-formElemt.addEventListener('submit', () => {
-    var p = new Constructor();
-    alert('thank you, ' + p.name);
-})
-var submitButtin = document.querySelector('button[type=submit]');
-submitButton.addEventListener('click', (e)=> {
-    var topic = new Constructor();      ^ <-can be called whatever
-    e.stopPropagation(); --stops parents above from listening, acts slowly though, stops like a car at a yellow light -used to stop bubbling
-    e.stopImmediatePropagation(); --stops parents from listening, acts immediately, red light --used to stop bubbling
-    e.preventDefault(); --stops inherient code of elements that have events attatched to them
-})
-*/
