@@ -22,17 +22,7 @@ var card = {                                    //card object, has QnA, true is 
 
 var testCard = new Card('Im the front', 'im the back'); //is this it's own object or piggy backing?
 
-//constructors
-function Topic(name) {                 //topic constructor
-    this.topicName = name;
-    this.numberIndex = 0;
-    this.cardArray = new Array(0);
-}
-function Card(question, answer) {       //card constructor 
-    this.front = question;
-    this.back = answer;
-    this.boo = true;
-}
+
 
 // Buttons Section
 var newTopicButton = document.querySelector('button[type=newTopic]');
@@ -43,6 +33,8 @@ var selectTopicButton = document.querySelector('button[type=selectTopic]');
 var saveButton = document.querySelector('button.save');
 var cancelButton = document.querySelector('button.cancel');
 var nextCardButton = document.querySelector('button[type=selectCard]');
+var deleteTopicButton = document.querySelector('button[type=deleteTopic]');
+var deleteCardButton = document.querySelector('button[type=deleteCard]');
 
 // Event listener section
 flipCardButton.addEventListener('click', flip);
@@ -51,6 +43,20 @@ newTopicButton.addEventListener('click', addTopic);
 editCardButton.addEventListener('click', edit);
 selectTopicButton.addEventListener('click', select);
 nextCardButton.addEventListener('click', next);
+deleteTopicButton.addEventListener('click', deleteTopic);
+deleteCardButton.addEventListener('click', deleteCard);
+
+//constructors
+function Topic(name) {//...........................................Topic constructor
+    this.topicName = name;
+    this.numberIndex = 0;
+    this.cardArray = new Array(0);
+}
+function Card(question, answer) {//................................Card constructor 
+    this.front = question;
+    this.back = answer;
+    this.boo = true;
+}
 
 // Code that sets up event chain from main control buttons
 function addQuestion() {//.........................................Adding a question, must update question and answer array, should require an object as input
@@ -87,12 +93,24 @@ function select() {//..............................................Lets you sele
     mail = setInterval(selectEnvelope, 250);
     doQnA(text);
 }
-function next() {//................................................Advance to the next card
+function next() {//................................................Code NEEDED: Advance to the next card
     testNum = nextOne(testArray, testNum);                           //this is stupid, look into me;
+}
+function deleteTopic() {//.........................................Removes a Topic: specs NEEDED
+    deafen();
+    var text = displayArray(testArray);
+    mail = setInterval(deleteEnvelope, 250);
+    doQnA(text);
+}
+function deleteCard() {//..........................................Removes a Card: specs NEEDED
+   var number = document.querySelector('#ID').innerHTML;
+   testArray.splice(number, 1);
+   //code to display previous card
+   
 }
 
 // Everything mail related.. so functionality tied to save/cancel
-function letter(boo, fn, boo2, fn2) {
+function letter(boo, fn, boo2, fn2) {//............................Chains response with eventListener
     if (!boo) {
         console.log('waiting');
     } else {
@@ -111,20 +129,23 @@ function letter(boo, fn, boo2, fn2) {
         fn2();
     }
 }
-function cardEnvelope() {
+function cardEnvelope() {//........................................Content Holder
     letter(btnPressS, questSave1, btnPressC, questCancel);
 }
-function cardEnvelope2() {
+function cardEnvelope2() {//.......................................Content Holder
     letter(btnPressS, questSave2, btnPressC, questCancel);
 }
-function topicEnvelope() {//.......................................
+function topicEnvelope() {//.......................................Content Holder
     letter(btnPressS, doTpcSvd, btnPressC, doTpcCnl);
 }
-function editEnvelope() {
+function editEnvelope() {//........................................Content Holder
     letter(btnPressS, editIt, btnPressC, genericCancel);
 }
-function selectEnvelope() {
+function selectEnvelope() {//......................................Content Holder
     letter(btnPressS, selectSave, btnPressC, genericCancel);
+}
+function deleteEnvelope(){//.......................................Content Holder
+    letter(btnPressS, confirmDelete, btnPressC, genericCancel);
 }
 
 // code related to specific actions
@@ -136,7 +157,7 @@ function questSave2() {//..........................................Creates the c
     document.querySelector('textarea').value = input;
     clearInterval(mail);
 }
-function questSave1() {//..........................................Ctores question
+function questSave1() {//..........................................Stores question
     input = document.querySelector('textarea').value;
     console.log('question saved as: ' + input);
     deafen();
@@ -194,6 +215,19 @@ function selectSave() {//..........................................Code NEEDED
         genericCancel();
     }
 }
+function confirmDelete (){//.......................................Code NEEDED: Remove and truncate array
+    var text = document.querySelector('textarea').value;
+    var indexy;
+    var text = document.querySelector('textarea').value;
+    var indexy;
+    if (compArray(testArray, text)) {
+        indexy = testArray.indexOf(text);
+        console.log('Delete topicfound at index: ' + indexy);
+        testArray.splice(indexy, 1);
+    } else {
+        genericCancel();
+    }
+}
 var nextOne = (array, number) => {//...............................Code NEEDED
     if (number === (array.length - 1)) {
         number = 0;
@@ -202,6 +236,7 @@ var nextOne = (array, number) => {//...............................Code NEEDED
     };
     document.querySelector('textarea').value = array[number];
     console.log(number);
+    document.querySelector('#ID').innerHTML= number;
     return number;
 }
 
@@ -236,6 +271,7 @@ function hyperacusis() {//.........................................Code to turn 
     editCardButton.addEventListener('click', edit);
     selectTopicButton.addEventListener('click', select);
     nextCardButton.addEventListener('click', next);
+    deleteTopicButton.addEventListener('click', deleteTopic);
 }
 function deafen() {//..............................................Code to turn listeners off
     newCardButton.removeEventListener('click', addQuestion);
@@ -244,6 +280,7 @@ function deafen() {//..............................................Code to turn 
     editCardButton.removeEventListener('click', edit);
     selectTopicButton.removeEventListener('click', select);
     nextCardButton.removeEventListener('click', next);
+    deleteTopicButton.removeEventListener('click', deleteTopic);
 }
 function optionsAreDown() {//......................................Removes save/cancel listeners
     saveButton.removeEventListener('click', savedMe);
@@ -289,6 +326,7 @@ function compArray(array, string) {//..............................Compare an ar
     }
     return false;
 }
+
 
 
 
