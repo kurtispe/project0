@@ -92,7 +92,7 @@ function select() {//..............................................Lets you sele
 }
 function next() {//................................................Code NEEDED: Advance to the next card
     var number = document.querySelector('#ID').innerHTML;
-    number = nextOne(testArray, number);                           
+    number = nextOne(testArray, number);
 }
 function deleteTopic() {//.........................................Removes a Topic: specs NEEDED
     deafen();
@@ -148,6 +148,12 @@ function deleteEnvelope() {//......................................Content Holde
 // Code related to specific actions
 function questSave2() {//..........................................Code NEEDED: Creates the card
     resp = document.querySelector('textarea').value;
+    //code to match topic
+
+    var tpc = document.querySelector('#topic').innerHTML;
+    var num = document.querySelector('#ID').innerHTML;
+
+    //dbAddCard(tpc, input, resp, num);
     console.log('create new card object here and add to array') //use resp and input for front and back
     //need to display current card
     genericCancel();
@@ -170,10 +176,8 @@ function doTpcSvd() {//............................................Code NEEDED: 
         document.querySelector('#topic').innerHTML = text;
         document.querySelector('#ID').innerHTML = '0';
         testArray.push(text);//........................................Look at me now
-        //var a = new Topic(text, 0, 0);
-        //theMachine.push(a);
-        //readMe(theMachine);
         console.log('make a topic oject here');
+        //dbAddTopic(text);
         document.querySelector('textarea').value = 'Pleas make a new card';
     }
 }
@@ -227,7 +231,7 @@ function confirmDelete() {//.......................................Code NEEDED: 
     }
 }
 var nextOne = (array, number) => {//...............................Code NEEDED
-    if (number >= (array.length - 1)) {               
+    if (number >= (array.length - 1)) {
         number = 0;
     } else {
         number++;
@@ -327,3 +331,67 @@ function compArray(array, string) {//..............................Compare an ar
     }
     return false;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                    mongoDB                                                                          //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//var db = client.db('FLASHCARDS'); //data store created
+/*
+const mongodb = require('mongodb');
+const dbClient = mongodb.MongoClient;
+function dbAddCard(topic, num, quest, resp) {
+    dbClient.connect('mongodb://localhost:27017', (error, client) => { //client connects to server
+        if (error) {                             //^call back functions
+            console.error(error);
+            client.close();
+        }
+        var db = client.db('FLASHCARDS'); //data store created
+        var deck = db.collection(topic);  //collections created 'person' ..topics var people = db.collection('topic');
+        deck.insertOne({ //object of card created 
+            "ID": num,
+            "front": quest,
+            "back": resp,
+            "boo": true
+        });
+        console.log('card added?');
+        client.close();
+    });
+};
+
+function dbAddTopic(string) {
+    dbClient.connect('mongodb://localhost:27017', (error, client) => { //client connects to server
+        if (error) {                             //^call back functions
+            console.error(error);
+            client.close();
+        }
+        var db = client.db('FLASHCARDS'); //data store created
+        var deck = db.collection(string);  //collections created 'person' ..topics var people = db.collection('topic');
+        console.log('topic added?');
+        client.close();
+    });
+};
+
+/*
+dbClient.connect('mongodb://localhost:27017', (error, client) => { //client connects to server
+    if (error) {                             //^call back functions
+        console.error(error);
+        client.close();
+    }
+
+    // var db = client.db('FLASHCARDS'); //data store created
+    var deck = db.collection(topic);  //collections created 'person' ..topics var people = db.collection('topic');
+
+    deck.insertOne({ //object of person created ..cards
+        "ID": num,
+        "front": quest,
+        "back": resp,
+        "boo": true
+
+    }).then(() => {                                     //wait for a person to be in stock, then give me product 
+        deck.find({}).toArray().then((data) => {        //use find as a filter
+            console.log(data);
+        });
+    });
+    //client.close();
+});*/
