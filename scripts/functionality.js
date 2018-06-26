@@ -163,11 +163,11 @@ function questSave1() {//..........................................Stores questi
 function doTpcSvd() {//............................................Code NEEDED: for topic save specifically
     var text = document.querySelector('textarea').value;
     if (compArray(testArray, text)) {
-        document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
+        document.querySelector('#topic').innerHTML = 'Preveous Selected Topic';
         document.querySelector('#ID').innerHTML = 'Previous id';
         document.querySelector('textarea').value = 'Sorry, Topic already exist, cannot make new Topic';
     } else {
-        document.querySelector('.topic').innerHTML = 'Topic: ' + text;
+        document.querySelector('#topic').innerHTML = text;
         document.querySelector('#ID').innerHTML = '0';
         testArray.push(text);//........................................Look at me now
         //var a = new Topic(text, 0, 0);
@@ -178,7 +178,7 @@ function doTpcSvd() {//............................................Code NEEDED: 
     }
 }
 function doTpcCnl() {//............................................Code for topic cancel specifically, might not actually be needed
-    document.querySelector('.topic').innerHTML = 'Previous Topic';
+    document.querySelector('#topic').innerHTML = 'Previous Topic';
     document.querySelector('textarea').value = 'Previous Question';
 }
 function flipIt(card) {//..........................................Code NEEDEDFlips the card
@@ -252,7 +252,7 @@ function canceledMe() {//..........................................Runs code tha
     hyperacusis();
 }
 function genericCancel() {//.......................................Generic cancel code
-    document.querySelector('.topic').innerHTML = 'Preveous Selected Topic';
+    document.querySelector('#topic').innerHTML = 'Preveous Selected Topic';
     var num = document.querySelector('#ID').innerHTML
     document.querySelector('#ID').innerHTML = num;
     document.querySelector('textarea').value = 'Previous Card';
