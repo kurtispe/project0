@@ -17,13 +17,19 @@
         <ul class="nav">
             <li class="col-sm-3"></li>
             <li class=" col-sm-2">
-                <button type="newTopic" class="btn_t"> New Topic </button>
+                <form action="/newT" method="POST">
+                    <button type="newTopic" class="btn_t"> New Topic </button>
+                </form>
             </li>
             <li class="col-sm-2">
-                <button type="selectTopic" class="btn_m"> Select Topic </button>
+                <form action="/selectT" method="POST">
+                    <button type="selectTopic" class="btn_m"> Select Topic </button>
+                </form>
             </li>
             <li class="col-sm-2">
-                <button type="deleteTopic" class="btn_b"> Remove Topic </button>
+                <form aaction="/deleteT" method="POST">
+                    <button type="deleteTopic" class="btn_b"> Remove Topic </button>
+                </form>
             </li>
             <li class="col-sm-3"></li>
         </ul>
@@ -36,22 +42,28 @@
             <card>
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
-                    <textarea name="card box" id="card_box" cols="60" rows="10"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum deleniti sequi voluptate atque Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque animi veniam totam, eligendi voluptatibus nisi doloribus, ducimus praesentium consequatur, cum quam mollitia. Nostrum corporis rerum, corrupti hic dignissimos temporibus. Dolores. repellendus rerum nihil itaque adipisci eligendi perferendis quos fugiat, ipsam deserunt quia iure ab qui doloribus! Id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque magni ratione quaerat illum tenetur officiis aliquid eius optio? Sunt ratione eveniet corrupti accusamus. Doloribus accusantium soluta ut quisquam sint temporibus.  </textarea>
+                    <form action="/words" method="POST">
+                        <textarea name="card_box" id="card_box" cols="60" rows="10"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum deleniti sequi voluptate atque Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque animi veniam totam, eligendi voluptatibus nisi doloribus, ducimus praesentium consequatur, cum quam mollitia. Nostrum corporis rerum, corrupti hic dignissimos temporibus. Dolores. repellendus rerum nihil itaque adipisci eligendi perferendis quos fugiat, ipsam deserunt quia iure ab qui doloribus! Id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque magni ratione quaerat illum tenetur officiis aliquid eius optio? Sunt ratione eveniet corrupti accusamus. Doloribus accusantium soluta ut quisquam sint temporibus. </textarea>
+                    </form>
                 </div>
             </card>
             <info>
                 <ul>
-                    <li class="topic" value="title"> Topic: 
-                     <span id="topic">"topic"</span>
+                    <li class="topic" value="title"> Topic:
+                        <span id="topic">"topic"</span>
                     </li>
-                    <li class="ID"> ID: 
+                    <li class="ID"> ID:
                         <span id="ID"> 0 </span>
                     </li>
                     <li>
-                        <button type="save" class="save"> Save </button>
+                        <form action="/save" method="POST">
+                            <button type="save" class="save"> Save </button>
+                        </form>
                     </li>
                     <li>
-                        <button type="cancel" class="cancel"> Cancel </button>
+                        <form action="/cancel" method="POST">
+                            <button type="cancel" class="cancel"> Cancel </button>
+                        </form>
                     </li>
                 </ul>
             </info>
@@ -60,25 +72,35 @@
             <ul>
                 <div class="col-sm-3"></div>
                 <li class="col-sm-1">
-                    <button type="newCard" class="btn_t"> New </button>
+                    <form action="/newC" method="POST">
+                        <button type="newCard" class="btn_t"> New </button>
+                    </form>
                 </li>
                 <li class="col-sm-1">
-                    <button type="editCard" class="btn_m"> Edit </button>
+                    <form action="/editC" method="POST">
+                        <button type="editCard" class="btn_m"> Edit </button>
+                    </form>
                 </li>
                 <li class="col-sm-1">
-                    <button type="flipCard" class="btn_m"> Flip </button>
+                    <form action="/flipC" method="POST">
+                        <button type="flipCard" class="btn_m"> Flip </button>
+                    </form>
                 </li>
                 <li class="col-sm-1">
-                    <button type="selectCard" class="btn_m"> Next</button>
+                    <form action="/nextC" method="POST">
+                        <button type="selectCard" class="btn_m"> Next</button>
+                    </form>
                 </li>
                 <li class="col-sm-1">
-                    <button type="deleteCard" class="btn_b"> Delete </button>
+                    <form action="/deleteC" method="POST">
+                        <button type="deleteCard" class="btn_b"> Delete </button>
+                    </form>
                 </li>
                 <div class="col-sm-3"></div>
             </ul>
         </section>
     </main>
-       <script src="functionality.js"></script>  
+    <script src="functionality.js"></script>
 </body>
 
 <footer>

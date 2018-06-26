@@ -76,7 +76,7 @@ function addTopic() {//............................................Sets up a new
 };
 function flip() {//................................................flip the card, needs code to find location
     //code to get location of card
-    flipIt(testCard);
+    flipIt(testCard);//.............................This needs to call the server
 }
 function edit() {//................................................Lets us change an existing card content
     deafen();
